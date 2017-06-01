@@ -16,22 +16,28 @@ namespace Ex03.GarageLogic
 
         private eEnergySource m_EnergySource;
         private float m_MaxEnergyCapacity;
+        private float m_CurrEnergyStatus;
 
-        public eEnergySource GetM_EnergySource()
+        public float CurrEnergyStatus { get => m_CurrEnergyStatus; }
+        public eEnergySource EnergySource { get => m_EnergySource; }
+        public float MaxEnergyCapacity { get => m_MaxEnergyCapacity; }
+
+        public void FillEnergySource(float i_EnergyAmountToAdd, eEnergySource i_EnergySource)
         {
-            return this.m_EnergySource;
+            if (m_CurrEnergyStatus + i_EnergyAmountToAdd <= MaxEnergyCapacity)
+            {
+                m_CurrEnergyStatus += i_EnergyAmountToAdd;
+            }
+            else
+            {
+                throw new InvalidOperationException("you can not charge/fuel a vehicle more than its max capacity");
+            }
         }
-        public void FillEnergySource(ref object float_, ref object eEnergySource)
+        public EnergyTank(eEnergySource i_EnergySource, float i_MaxEnergyCapacity, float i_m_CurrEnergyStatus)
         {
-            throw new System.Exception("Not implemented");
-        }
-        public EnergyTank(ref object eEnergySource, ref object float_)
-        {
-            throw new System.Exception("Not implemented");
-        }
-        public float GetM_MaxEnergyCapacity()
-        {
-            return this.m_MaxEnergyCapacity;
+            m_EnergySource = i_EnergySource;
+            m_MaxEnergyCapacity = i_MaxEnergyCapacity;
+            m_CurrEnergyStatus= i_m_CurrEnergyStatus;
         }
     }
 }
