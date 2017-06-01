@@ -12,16 +12,23 @@ namespace Ex03.GarageLogic
         {
             this.m_Manufacturer = i_Manufacturer;
             this.m_MaxAirPressure = i_MaxAirPressure;
-            this.m_CurrAirPressure = this.m_MaxAirPressure;
+            this.m_CurrAirPressure = i_MaxAirPressure;
         }
 
         public string Manufacturer { get => m_Manufacturer; }
         public float MaxAirPressure { get => m_MaxAirPressure; }
         public float CurrAirPressure { get => m_CurrAirPressure; }
 
-        public void Inflate(ref object float_)
+        public void Inflate(float i_AddedAirVolume)
         {
-            throw new System.Exception("Not implemented");
+           if(m_CurrAirPressure + i_AddedAirVolume <= m_MaxAirPressure)
+            {
+                m_CurrAirPressure += i_AddedAirVolume;
+            }
+           else
+            {
+                throw new InvalidOperationException("you can not inflate the tire more than its max capacity");
+            }
         }
     }
 }

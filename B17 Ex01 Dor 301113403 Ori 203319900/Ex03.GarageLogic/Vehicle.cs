@@ -24,13 +24,30 @@ namespace Ex03.GarageLogic
         public string LicenceNumber { get => m_LicenceNumber; }
 
         public Vehicle(string i_ModelName, string i_LicenseNumber, eEnergySource i_EnergySource,
-            float maxEnergyCapacity, string i_OwnerName, string i_OwnerPhone)
+            float i_MaxEnergyCapacity, float i_CurrEnergyStatus, string i_OwnerName, string i_OwnerPhone)
         {
-            throw new System.Exception("Not implemented");
+            m_ModelName = i_ModelName;
+            m_LicenceNumber = i_LicenseNumber;
+            m_EnergyTank = new EnergyTank(i_EnergySource, i_MaxEnergyCapacity, i_CurrEnergyStatus);
+            m_Wheels = new List<Wheel>();
+            m_Owner = new Owner(i_OwnerName, i_OwnerPhone);
+            m_Status = eStatus.InRepair;
         }
 
         public void InflateWheelsToMax()
         {
+            try
+            {
+                foreach (Wheel item in m_Wheels)
+                {
+                    float airToAdd = item.MaxAirPressure - item.CurrAirPressure;
+                    item.Inflate(airToAdd);
+                }
+            }
+            catch (Exception ex)
+            {
+               
+            }
         }
 
         public void FillEnergySource(float i_EnergyAmount, eEnergySource i_EnergySource)
@@ -52,6 +69,17 @@ namespace Ex03.GarageLogic
         {
 
             return 1;
+        }
+    }
+
+    public class  failedToInflateException : Exception
+    {
+        int m_WheelIdx;
+
+        public failedToInflateException() { }
+        public failedToInflateException(string i_message, int i_WheelIdx) : base (i_message)
+        {
+            m_WheelIdx = i_WheelIdx;
         }
     }
 }
