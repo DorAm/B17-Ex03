@@ -22,6 +22,7 @@ namespace Ex03.GarageLogic
 
         public string ModelName { get => m_ModelName; }
         public string LicenceNumber { get => m_LicenceNumber; }
+        public eStatus Status { get => m_Status; }
 
         public Vehicle(string i_ModelName, string i_LicenseNumber, eEnergySource i_EnergySource,
             float maxEnergyCapacity, string i_OwnerName, string i_OwnerPhone)

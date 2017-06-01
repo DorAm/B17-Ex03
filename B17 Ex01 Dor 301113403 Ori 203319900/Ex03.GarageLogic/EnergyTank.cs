@@ -10,6 +10,7 @@ namespace Ex03.GarageLogic
         Octan98,
         Electric
     }
+
     public class EnergyTank
     {
 
