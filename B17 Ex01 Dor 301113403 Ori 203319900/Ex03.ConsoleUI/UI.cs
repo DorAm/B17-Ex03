@@ -1,21 +1,26 @@
-﻿using Ex03.GarageLogic;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Runtime.InteropServices;
+using Ex03.GarageLogic;
 
-public class Garage_Manager
+
+public class UI
 {
-    private List<Vehicle> m_Vehicles;
 
     private enum eMenuOptions
     {
-        Register_Vehicle,
+        Register_Vehicle = 1,
         Display_Vehicle_List,
         Change_Vehicle_Status,
         Inflate_Wheels,
         Refuel_Gas,
         Recharge_Electric,
         Display_Vehicle_Data
+    }
+
+    public UI()
+    {
+
     }
 
     public void DisplayMainMenu()
@@ -30,10 +35,9 @@ public class Garage_Manager
 
         Array menuOptions = Enum.GetValues(typeof(eMenuOptions));
         ushort index = 1;
-        foreach (var option in menuOptions)
+        foreach (eMenuOptions menuOption in menuOptions)
         {
-            string optionStr = option.ToString();
-            Console.WriteLine("{0}. {1}", index, optionStr);
+            Console.WriteLine("{0}. {1}", index, menuOption.ToString());
             index++;
         }
 
@@ -42,26 +46,107 @@ public class Garage_Manager
         );
     }
 
+    // TOOD: implement
+    //private displayEnumOptions(enum)
+    //{
+
+    //}
+
     public void InputUsersChoice()
     {
         // TODO: change to try parse
         eMenuOptions usersChoice = (eMenuOptions)Enum.Parse(typeof(eMenuOptions), Console.ReadLine());
-        typeof(Garage_Manager).GetMethod("DisplayMainMenu").Invoke(this, new[] { "world"});
+        //typeof(GarageManager).GetMethod("DisplayMainMenu").Invoke(this, new[] { "world" });
     }
 
-    private void routeToFunction(eMenuOptions usersChoice)
+    private void routeToFunction(eMenuOptions iUsersChoice)
     {
-        switch (usersChoice)
+        switch (iUsersChoice)
         {
+            case eMenuOptions.Register_Vehicle:
+                registerVehicleMenu();
+                break;
+            case eMenuOptions.Display_Vehicle_List:
+                displayVehicleListMenu();
+                break;
             case eMenuOptions.Change_Vehicle_Status:
-                ChangeVehicleStatus();
+                changeVehicleStatusMenu();
+                break;
+            case eMenuOptions.Inflate_Wheels:
+                inflateWheelsMenu();
+                break;
+            case eMenuOptions.Refuel_Gas:
+                refuelGasMenu();
+                break;
+            case eMenuOptions.Recharge_Electric:
+                rechargeElectricMenu();
                 break;
             case eMenuOptions.Display_Vehicle_Data:
-                DisplayCarData();
+                displayVehicleDataMenu();
                 break;
             default:
                 break;
         }
+    }
+
+    private void registerVehicleMenu()
+    {
+        Dictionary<string, Object> vehicleData = new Dictionary<string, object>();
+
+        Console.WriteLine(@"
+==================================
+===== Register a new vehicle =====
+==================================
+
+Which vehicle would you like to register?
+        ");
+
+        Array carTypes = Enum.GetValues(typeof(eVehicleTypes));
+        ushort index = 1;
+        foreach (var carType in carTypes)
+        {
+            Console.WriteLine("{0}. {1}", index, carType.ToString());
+            index++;
+        }
+
+        Console.WriteLine(@"
+Please choose
+        ");
+
+        foreach (var attribute in attributes)
+        {
+            Console.WriteLine(@"Please enter {0}", attribute);
+            vehicleData.Add(attribute, Console.ReadLine());
+        }
+    }
+
+    private void displayVehicleListMenu()
+    {
+
+    }
+
+    private void changeVehicleStatusMenu()
+    {
+
+    }
+
+    private void inflateWheelsMenu()
+    {
+
+    }
+
+    private void refuelGasMenu()
+    {
+
+    }
+
+    private void rechargeElectricMenu()
+    {
+
+    }
+
+    private void displayVehicleDataMenu()
+    {
 
     }
     //public void RegisterVehicle(int i_LicenseNumber)
@@ -115,15 +200,15 @@ public class Garage_Manager
             // TODO: is this O(n) access?
             //m_Vehicles[i_LicenseNumber].status = i_
         }
-        public void InflateToMax(int i_LicenseNumber)
+        public void InflateToMax()
         {
 
         }
-        public void FuelCar(int i_LicenseNumber, eEnergySource i_EnergySource, float i_Amount)
+        public void FuelCar(int i_LicenseNumber, eEnergySource iEnergySource, float iAmount)
         {
 
         }
-        public void ChargeCar(int i_LicenseNumber, float i_Amount)
+        public void ChargeCar(int i_LicenseNumber, float iAmount)
         {
 
         }
