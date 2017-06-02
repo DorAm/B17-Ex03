@@ -5,10 +5,11 @@ using System.Collections.Generic;
 public class Garage_Manager
 {
     private List<Vehicle> m_Vehicles;
+    private VehicleFactory m_vehicleFactory;
 
     public void RegisterVehicle(int i_LicenseNumber)
     {
-
+            
     }
     public void ShowLicenseByStatus(eStatus VehicleStatus)
     {
