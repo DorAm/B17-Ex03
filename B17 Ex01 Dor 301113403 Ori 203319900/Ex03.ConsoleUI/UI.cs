@@ -112,7 +112,7 @@ Which vehicle would you like to register?
         Console.WriteLine(@"
 Please choose from the above list
         ");
-        eVehicleType chosenVehicleType = Enum.Parse(typeof(eVehicleType), Console.ReadLine());
+        eVehicleType chosenVehicleType = (eVehicleType)Enum.Parse(typeof(eVehicleType), Console.ReadLine());
 
         // Reading attributes from the user according to the type of vehicle:
         List<Tuple<Type, string>> vehicleAttributes = m_GarageManager.GetVehicleAttributes(chosenVehicleType);

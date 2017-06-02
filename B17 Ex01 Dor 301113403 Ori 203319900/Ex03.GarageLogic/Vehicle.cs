@@ -39,18 +39,13 @@ namespace Ex03.GarageLogic
 
         public void InflateWheelsToMax()
         {
-            try
+
+            foreach (Wheel item in m_Wheels)
             {
-                foreach (Wheel item in m_Wheels)
-                {
-                    float airToAdd = item.MaxAirPressure - item.CurrAirPressure;
-                    item.Inflate(airToAdd);
-                }
+                float airToAdd = item.MaxAirPressure - item.CurrAirPressure;
+                item.Inflate(airToAdd);
             }
-            catch (Exception ex)
-            {
-               
-            }
+
         }
 
         public void FillEnergySource(float i_EnergyAmount, eEnergySource i_EnergySource)
@@ -75,12 +70,12 @@ namespace Ex03.GarageLogic
         }
     }
 
-    public class  failedToInflateException : Exception
+    public class failedToInflateException : Exception
     {
         int m_WheelIdx;
 
         public failedToInflateException() { }
-        public failedToInflateException(string i_message, int i_WheelIdx) : base (i_message)
+        public failedToInflateException(string i_message, int i_WheelIdx) : base(i_message)
         {
             m_WheelIdx = i_WheelIdx;
         }

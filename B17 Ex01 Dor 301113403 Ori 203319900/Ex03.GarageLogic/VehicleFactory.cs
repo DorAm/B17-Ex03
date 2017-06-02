@@ -8,28 +8,36 @@ namespace Ex03.GarageLogic
 {
     public enum eVehicleType
     {
+        Car,
+        Motorcycle,
+        Truck
+    }
+
+    public enum eSupportedVehicle
+    {
         RregularBike,
         ElectricBike,
         RegularCar,
         ElectricCar,
         Truck
     }
+
     public class VehicleFactory
     {
-        public Vehicle BuildNewVehicle(eVehicleType i_Type, Dictionary<string,object> i_VehicleAttributs)
+        public Vehicle BuildNewVehicle(eSupportedVehicle i_Type, Dictionary<string,object> i_VehicleAttributs)
         {
             switch (i_Type)
             {
-                case eVehicleType.RregularBike:
+                case eSupportedVehicle.RregularBike:
 
                     break;
-                case eVehicleType.ElectricBike:
+                case eSupportedVehicle.ElectricBike:
                     break;
-                case eVehicleType.RegularCar:
+                case eSupportedVehicle.RegularCar:
                     break;
-                case eVehicleType.ElectricCar:
+                case eSupportedVehicle.ElectricCar:
                     break;
-                case eVehicleType.Truck:
+                case eSupportedVehicle.Truck:
                     break;
                 default:
                     break;
