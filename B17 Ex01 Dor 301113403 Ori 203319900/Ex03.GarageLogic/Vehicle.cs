@@ -24,6 +24,8 @@ namespace Ex03.GarageLogic
         public string LicenceNumber { get => m_LicenceNumber; }
         public eStatus Status { get => m_Status; }
 
+        public Vehicle() { }//TODO delete empty ctor
+
         public Vehicle(string i_ModelName, string i_LicenseNumber, eEnergySource i_EnergySource,
             float i_MaxEnergyCapacity, float i_CurrEnergyStatus, string i_OwnerName, string i_OwnerPhone)
         {

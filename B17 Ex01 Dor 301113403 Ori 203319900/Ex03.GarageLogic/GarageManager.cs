@@ -5,13 +5,13 @@ namespace Ex03.GarageLogic
 {
     class GarageManager
     {
-        public List<Vehicle> m_Vehicles { get; }
+        private List<Vehicle> m_Vehicles = null;
 
-        public GarageManager(List<Vehicle> mVehicles)
+        public GarageManager()
         {
-            this.m_Vehicles = Vehicles;
+                
         }
-       
+
+     //   public getVehicleAttributes()
     }
 }
-
