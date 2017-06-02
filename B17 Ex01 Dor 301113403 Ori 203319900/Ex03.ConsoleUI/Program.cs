@@ -6,8 +6,8 @@ namespace Ex03.ConsoleUI
     {
         public static void Main()
         {
-            GarageManager gm = new GarageManager();
-            gm.DisplayMainMenu();
+            UI garageInterfae = new UI();
+            garageInterfae.DisplayMainMenu();            
         }
     }
 }
