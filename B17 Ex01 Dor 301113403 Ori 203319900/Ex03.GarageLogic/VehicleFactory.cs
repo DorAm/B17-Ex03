@@ -16,9 +16,9 @@ namespace Ex03.GarageLogic
     }
     public class VehicleFactory
     {
-        public Vehicle BuildNewVehicle(eVehicleType type)
+        public Vehicle BuildNewVehicle(eVehicleType i_Type, Dictionary<string,object> i_VehicleAttributs)
         {
-            switch (type)
+            switch (i_Type)
             {
                 case eVehicleType.RregularBike:
 
@@ -34,6 +34,9 @@ namespace Ex03.GarageLogic
                 default:
                     break;
             }
+
+            Vehicle dummy = new Vehicle();
+            return dummy;
         }
     }
 }
