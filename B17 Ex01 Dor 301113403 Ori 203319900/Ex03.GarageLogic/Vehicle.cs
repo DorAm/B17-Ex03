@@ -12,13 +12,23 @@ namespace Ex03.GarageLogic
 
     public class Vehicle
     {
-
         private string m_ModelName;
         private string m_LicenceNumber;
         private EnergyTank m_EnergyTank;
         private List<Wheel> m_Wheels;
         private Owner m_Owner;
         private eStatus m_Status;
+        private static readonly List<Tuple<Type, string>> s_ObjectCreationList = new List<Tuple<Type, string>>
+        {
+            Tuple.Create(typeof(string), "model name"),
+            Tuple.Create(typeof(string), "License Number"),
+            Tuple.Create(typeof(string), "License Number"),
+            Tuple.Create(typeof(eEnergySource), "Energy Source"),
+            Tuple.Create(typeof(float), "Max Energy Capacity"),
+            Tuple.Create(typeof(float), "Current energy status"),
+            Tuple.Create(typeof(string), "Owner name"),
+            Tuple.Create(typeof(string), "Owner Phone Number")
+        };
 
         public string ModelName { get => m_ModelName; }
         public string LicenceNumber { get => m_LicenceNumber; }

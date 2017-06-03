@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
@@ -14,6 +15,10 @@ namespace Ex03.GarageLogic
     {
         private eColor m_Color;
         private int m_NumOfDoors;
+        private static readonly List<Tuple<Type, string>> s_InheritedObjectCreationList = new List<Tuple<Type, string>> {
+            Tuple.Create(typeof(eColor), "Color"),
+            Tuple.Create(typeof(float), "Number of doors")
+        };
 
         public Car(string i_ModelName, string i_LicenseNumber, eEnergySource i_EnergySource, float maxEnergyCapacity, float i_CurrEnsergyStatus, string i_OwnerName,
                    string i_OwnerPhone, eColor i_Color, int i_NumOfDoors)
