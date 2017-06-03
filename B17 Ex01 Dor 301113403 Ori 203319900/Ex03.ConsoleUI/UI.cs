@@ -133,6 +133,7 @@ Please choose from the above list
 
             Console.WriteLine(@"Please enter {0}", attributesName);            
             string userInput = Console.ReadLine();
+            eLicenseType selected = (eLicenseType)Convert.ChangeType(userInput, attributesType);
             vehicleData.Add(attributesName, Convert.ChangeType(userInput, attributesType));
         }
     }
