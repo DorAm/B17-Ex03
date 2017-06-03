@@ -27,8 +27,7 @@ public class UI
     public void RunGarage()
     {
         this.DisplayMainMenu();
-        eMenuOptions usersChoice = InputUsersChoice();
-        this.routeToMethod(usersChoice);
+        this.routeToMethod(InputUsersChoice());
     }
 
     public void DisplayMainMenu()
@@ -53,12 +52,6 @@ public class UI
 ==========================="
         );
     }
-
-    // TOOD: implement
-    //private displayEnumOptions(enum)
-    //{
-
-    //}
 
     private eMenuOptions InputUsersChoice()
     {
@@ -97,11 +90,10 @@ public class UI
         }
     }
 
-    // Register Vehicle
+    // == Register Vehicle ==
 
     private void registerVehicleMenu()
     {
-
         Console.WriteLine(@"
 ==================================
 ===== Register a new vehicle =====
@@ -117,13 +109,13 @@ Which vehicle would you like to register?
             Console.WriteLine("{0}. {1}", index, vehicleType.ToString());
             index++;
         }
-
         Console.WriteLine(@"
 Please choose from the above list
         ");
 
         eVehicleType chosenVehicleType = (eVehicleType)Enum.Parse(typeof(eVehicleType), Console.ReadLine());
         Dictionary<string, object> vehicleData = getVehicleData(chosenVehicleType);
+        m_GarageManager.RegisterVehicle(vehicleData);
     }
 
     private Dictionary<string, object> getVehicleData(eVehicleType i_ChosenVehicleType)
@@ -134,7 +126,6 @@ Please choose from the above list
 
         foreach (var vehicleAttribute in vehicleAttributes)
         {
-
             Type attributesType = vehicleAttribute.Item1;
             string attributesName = vehicleAttribute.Item2;
             Console.WriteLine(@"Please enter {0}", attributesName);
