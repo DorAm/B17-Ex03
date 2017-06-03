@@ -120,29 +120,50 @@ Which vehicle would you like to register?
         Console.WriteLine(@"
 Please choose from the above list
         ");
-        eVehicleType chosenVehicleType = (eVehicleType)Enum.Parse(typeof(eVehicleType), Console.ReadLine());
 
+        eVehicleType chosenVehicleType = (eVehicleType)Enum.Parse(typeof(eVehicleType), Console.ReadLine());
+        Dictionary<string, object> vehicleData = getVehicleData(chosenVehicleType);
+    }
+
+    private Dictionary<string, object> getVehicleData(eVehicleType i_ChosenVehicleType)
+    {
         // Reading attributes from the user according to the type of vehicle:
-        List<Tuple<Type, string>> vehicleAttributes = m_GarageManager.GetVehicleAttributes(chosenVehicleType);
+        List<Tuple<Type, string>> vehicleAttributes = m_GarageManager.GetVehicleAttributes(i_ChosenVehicleType);
         Dictionary<string, object> vehicleData = new Dictionary<string, object>();
 
         foreach (var vehicleAttribute in vehicleAttributes)
         {
+
             Type attributesType = vehicleAttribute.Item1;
             string attributesName = vehicleAttribute.Item2;
-
-            Console.WriteLine(@"Please enter {0}", attributesName);            
+            Console.WriteLine(@"Please enter {0}", attributesName);
             string userInput = Console.ReadLine();
-            eLicenseType selected = (eLicenseType)Convert.ChangeType(userInput, attributesType);
-            vehicleData.Add(attributesName, Convert.ChangeType(userInput, attributesType));
+            object parsedInput = parseStringToObject(attributesType, userInput);
+            vehicleData.Add(attributesName, Convert.ChangeType(parsedInput, attributesType));
         }
+
+        return vehicleData;
+    }
+
+    private object parseStringToObject(Type i_AttributesType, string i_UserInput)
+    {
+        object parsedInput;
+        if (i_AttributesType.IsEnum)
+        {
+            parsedInput = Enum.Parse(i_AttributesType, i_UserInput);
+        }
+        else
+        {
+            parsedInput = Convert.ChangeType(i_UserInput, i_AttributesType);
+        }
+        return parsedInput;
     }
 
     //private void displayVehicleListMenu()
     //{        
     //    foreach (var  m_GarageManager.vehicles)
     //    {
-            
+
     //    }
     //}
 
@@ -238,4 +259,4 @@ Please choose from the above list
 
     //    }
 
-    }
+}

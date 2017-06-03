@@ -33,6 +33,7 @@ namespace Ex03.GarageLogic
                 if (memberType.Name == "EnergyTank" || memberType.Name == "Owner" || memberType.Name == "Wheel")
                 {
                     createMembersList(memberType, ref io_VehicleAttributes);
+                    continue;
                 }
 
                 Tuple<Type, string> requestedAttribute = new Tuple<Type, string>(member.FieldType, member.Name);
