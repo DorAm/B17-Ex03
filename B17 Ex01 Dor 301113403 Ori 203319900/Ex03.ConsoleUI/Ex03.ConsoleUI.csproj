@@ -42,9 +42,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Ex03.GarageLogic">
-      <HintPath>..\Ex03.GarageLogic.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\Ex03.GarageLogic\Ex03.GarageLogic.csproj">
+      <Project>{d69b4678-9483-4a10-b505-b3947a8c0c7b}</Project>
+      <Name>Ex03.GarageLogic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
