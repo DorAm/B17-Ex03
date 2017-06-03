@@ -17,17 +17,28 @@ namespace Ex03.GarageLogic
         {
             List<Tuple<Type, string>> vehicleAttributes = new List<Tuple<Type, string>>();
             Type vehicleActualType = Type.GetType("Ex03.GarageLogic." + i_VehicleType.ToString());
-            FieldInfo[] vehicleMembers = vehicleActualType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+            createMembersList(vehicleActualType, ref vehicleAttributes);
+            createMembersList(typeof(Vehicle), ref vehicleAttributes);
+
+            return vehicleAttributes;
+        }
+
+        private void createMembersList(Type i_VehicleActualType, ref List<Tuple<Type, string>> io_VehicleAttributes)
+        {
+            FieldInfo[] vehicleMembers = i_VehicleActualType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
 
             foreach (var member in vehicleMembers)
             {
+                Type memberType = member.FieldType;
+                if (memberType.Name == "EnergyTank" || memberType.Name == "Owner" || memberType.Name == "Wheel")
+                {
+                    createMembersList(memberType, ref io_VehicleAttributes);
+                }
 
-                Console.Write("{0}", member.Name);
                 Tuple<Type, string> requestedAttribute = new Tuple<Type, string>(member.FieldType, member.Name);
-                vehicleAttributes.Add(requestedAttribute);
+                io_VehicleAttributes.Add(requestedAttribute);
             }
 
-            return vehicleAttributes;
         }
     }
 }
