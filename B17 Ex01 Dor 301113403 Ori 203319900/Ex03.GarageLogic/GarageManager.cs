@@ -6,8 +6,15 @@ namespace Ex03.GarageLogic
 {
     public class GarageManager
     {
-        private List<Vehicle> m_Vehicles = null;
-
+        private List<Vehicle> m_Vehicles = new List<Vehicle>()
+        {
+            new Vehicle("Mazda", "L125215", eEnergySource.Electric, 100, 60, "Dor", "104215"),
+            new Vehicle("Pegueot", "L56458", eEnergySource.Octan95, 120, 60, "Ori", "23906832"),
+            new Vehicle("Fiat", "L51205809", eEnergySource.Soler, 1000, 650, "Dana", "01285125"),
+            new Vehicle("Subaru", "L238512", eEnergySource.Octan98, 1000, 1, "Greg", "0582951")
+        };
+        public List<Vehicle> Vehicles { get => m_Vehicles; }
+    
         public GarageManager()
         {
 
@@ -41,5 +48,6 @@ namespace Ex03.GarageLogic
             }
 
         }
+        
     }
 }

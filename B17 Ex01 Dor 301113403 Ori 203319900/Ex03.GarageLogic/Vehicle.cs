@@ -5,12 +5,12 @@ namespace Ex03.GarageLogic
 {
     public enum eStatus
     {
-        InRepair,
+        InRepair = 1,
         Repaired,
         Paid
     }
 
-    public class Vehicle
+    public abstract class Vehicle
     {
         private string m_ModelName;
         private string m_LicenceNumber;
@@ -32,7 +32,7 @@ namespace Ex03.GarageLogic
 
         public string ModelName { get => m_ModelName; }
         public string LicenceNumber { get => m_LicenceNumber; }
-        public eStatus Status { get => m_Status; }
+        public eStatus Status { get => m_Status; set => m_Status = value; }        
 
         public Vehicle(string i_ModelName, string i_LicenseNumber, eEnergySource i_EnergySource,
             float i_MaxEnergyCapacity, float i_CurrEnergyStatus, string i_OwnerName, string i_OwnerPhone)
@@ -45,7 +45,6 @@ namespace Ex03.GarageLogic
             m_Status = eStatus.InRepair;
         }
 
-        private 
 
         public void InflateWheelsToMax()
         {
@@ -78,6 +77,8 @@ namespace Ex03.GarageLogic
 
             return 1;
         }
+
+        public abstract override string ToString();
     }
 
     public class failedToInflateException : Exception
@@ -90,4 +91,6 @@ namespace Ex03.GarageLogic
             m_WheelIdx = i_WheelIdx;
         }
     }
+
+
 }

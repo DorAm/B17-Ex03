@@ -23,5 +23,18 @@ namespace Ex03.GarageLogic
 
         public bool IsHazMat { get => m_IsHazMat; }
         public float MaxLoad { get => m_MaxLoad; }
+
+        public override string ToString()
+        {
+//            string str = String.Format(@"
+//License Number: {0}
+//Model Number: {1}
+//Owner: {2},
+//Status: {3},
+//Wheels Data: {4},
+//Gas Type: {5}
+//", LicenceNumber, ModelName, Owner.toString(), Status, Wheel, EnergyTank.);
+//            return str;
+        }
     }
 }
