@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
     public class Truck : Vehicle
     {
+        private static readonly List<Tuple<Type, string>> s_InheritedObjectCreationList = new List<Tuple<Type, string>> {
+            Tuple.Create(typeof(bool), "Does contain hazardous Material"),
+            Tuple.Create(typeof(float), "Maximum load")
+        };
+
         private bool m_IsHazMat;
         private float m_MaxLoad;
 

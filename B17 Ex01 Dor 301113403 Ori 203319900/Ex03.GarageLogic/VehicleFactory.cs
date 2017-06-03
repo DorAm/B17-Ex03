@@ -46,5 +46,7 @@ namespace Ex03.GarageLogic
             Vehicle dummy = new Vehicle();
             return dummy;
         }
+        
+        new Truck(Inputs[m_Tpe], input[])
     }
 }

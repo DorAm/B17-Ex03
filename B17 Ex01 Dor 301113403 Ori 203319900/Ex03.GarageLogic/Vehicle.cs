@@ -12,19 +12,27 @@ namespace Ex03.GarageLogic
 
     public class Vehicle
     {
-
         private string m_ModelName;
         private string m_LicenceNumber;
         private EnergyTank m_EnergyTank;
         private List<Wheel> m_Wheels;
         private Owner m_Owner;
         private eStatus m_Status;
+        private static readonly List<Tuple<Type, string>> s_ObjectCreationList = new List<Tuple<Type, string>>
+        {
+            Tuple.Create(typeof(string), "model name"),
+            Tuple.Create(typeof(string), "License Number"),
+            Tuple.Create(typeof(string), "License Number"),
+            Tuple.Create(typeof(eEnergySource), "Energy Source"),
+            Tuple.Create(typeof(float), "Max Energy Capacity"),
+            Tuple.Create(typeof(float), "Current energy status"),
+            Tuple.Create(typeof(string), "Owner name"),
+            Tuple.Create(typeof(string), "Owner Phone Number")
+        };
 
         public string ModelName { get => m_ModelName; }
         public string LicenceNumber { get => m_LicenceNumber; }
         public eStatus Status { get => m_Status; }
-
-        public Vehicle() { }//TODO delete empty ctor
 
         public Vehicle(string i_ModelName, string i_LicenseNumber, eEnergySource i_EnergySource,
             float i_MaxEnergyCapacity, float i_CurrEnergyStatus, string i_OwnerName, string i_OwnerPhone)
@@ -36,6 +44,8 @@ namespace Ex03.GarageLogic
             m_Owner = new Owner(i_OwnerName, i_OwnerPhone);
             m_Status = eStatus.InRepair;
         }
+
+        private 
 
         public void InflateWheelsToMax()
         {
