@@ -13,19 +13,21 @@ namespace Ex03.GarageLogic
 
         }
 
-        //public List<Tuple<string, string>> GetVehicleAttributes(eVehicleType i_VehicleType)
-        //{
-        //    List<Tuple<Type, string>> vehicleAttributes = new List<Tuple<Type, string>>();
-        //    Type vehicleType = Type.GetType(i_VehicleType.ToString());
-        //    FieldInfo[] vehicleMembers = vehicleType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+        public List<Tuple<Type, string>> GetVehicleAttributes(eVehicleType i_VehicleType)
+        {
+            List<Tuple<Type, string>> vehicleAttributes = new List<Tuple<Type, string>>();
+            Type vehicleActualType = Type.GetType("Ex03.GarageLogic." + i_VehicleType.ToString());
+            FieldInfo[] vehicleMembers = vehicleActualType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
 
-        //    foreach (var member in vehicleMembers)
-        //    {
+            foreach (var member in vehicleMembers)
+            {
 
-        //        Console.Write("{0}", member.Name);
-        //        //Tuple<Type, string> requestedAttribute = new Tuple<var, var>(member.FieldType, member.Name);
+                Console.Write("{0}", member.Name);
+                Tuple<Type, string> requestedAttribute = new Tuple<Type, string>(member.FieldType, member.Name);
+                vehicleAttributes.Add(requestedAttribute);
+            }
 
-        //    }
-        //}
+            return vehicleAttributes;
+        }
     }
 }

@@ -17,6 +17,13 @@ public class UI
         Recharge_Electric,
         Display_Vehicle_Data
     }
+
+    public void RunGarage()
+    {
+        this.DisplayMainMenu();
+        this.InputUsersChoice();
+    }
+
     private GarageManager m_GarageManager;
 
     public UI()
@@ -58,33 +65,34 @@ public class UI
         // TODO: change to try parse
         eMenuOptions usersChoice = (eMenuOptions)Enum.Parse(typeof(eMenuOptions), Console.ReadLine());
         //typeof(GarageManager).GetMethod("DisplayMainMenu").Invoke(this, new[] { "world" });
+        this.routeToMethod(usersChoice);
     }
 
-    private void routeToFunction(eMenuOptions iUsersChoice)
+    private void routeToMethod(eMenuOptions i_UsersChoice)
     {
-        switch (iUsersChoice)
+        switch (i_UsersChoice)
         {
             case eMenuOptions.Register_Vehicle:
                 registerVehicleMenu();
                 break;
-            case eMenuOptions.Display_Vehicle_List:
-                displayVehicleListMenu();
-                break;
-            case eMenuOptions.Change_Vehicle_Status:
-                changeVehicleStatusMenu();
-                break;
-            case eMenuOptions.Inflate_Wheels:
-                inflateWheelsMenu();
-                break;
-            case eMenuOptions.Refuel_Gas:
-                refuelGasMenu();
-                break;
-            case eMenuOptions.Recharge_Electric:
-                rechargeElectricMenu();
-                break;
-            case eMenuOptions.Display_Vehicle_Data:
-                displayVehicleDataMenu();
-                break;
+            //case eMenuOptions.Display_Vehicle_List:
+            //    displayVehicleListMenu();
+            //    break;
+            //case eMenuOptions.Change_Vehicle_Status:
+            //    changeVehicleStatusMenu();
+            //    break;
+            //case eMenuOptions.Inflate_Wheels:
+            //    inflateWheelsMenu();
+            //    break;
+            //case eMenuOptions.Refuel_Gas:
+            //    refuelGasMenu();
+            //    break;
+            //case eMenuOptions.Recharge_Electric:
+            //    rechargeElectricMenu();
+            //    break;
+            //case eMenuOptions.Display_Vehicle_Data:
+            //    displayVehicleDataMenu();
+            //    break;
             default:
                 break;
         }
@@ -129,38 +137,38 @@ Please choose from the above list
         }
     }
 
-    private void displayVehicleListMenu()
-    {        
-        foreach (var  m_GarageManager.vehicles)
-        {
+    //private void displayVehicleListMenu()
+    //{        
+    //    foreach (var  m_GarageManager.vehicles)
+    //    {
             
-        }
-    }
+    //    }
+    //}
 
-    private void changeVehicleStatusMenu()
-    {
+    //private void changeVehicleStatusMenu()
+    //{
 
-    }
+    //}
 
-    private void inflateWheelsMenu()
-    {
+    //private void inflateWheelsMenu()
+    //{
 
-    }
+    //}
 
-    private void refuelGasMenu()
-    {
+    //private void refuelGasMenu()
+    //{
 
-    }
+    //}
 
-    private void rechargeElectricMenu()
-    {
+    //private void rechargeElectricMenu()
+    //{
 
-    }
+    //}
 
-    private void displayVehicleDataMenu()
-    {
+    //private void displayVehicleDataMenu()
+    //{
 
-    }
+    //}
     //public void RegisterVehicle(int i_LicenseNumber)
     //{
     //    string message = String.Format(
@@ -205,28 +213,28 @@ Please choose from the above list
     //    }
     //}
 
-    public void ChangeVehicleStatus()
-    {
-        //public void ChangeVehicleStatus(int i_LicenseNumber, eStatus VehicleStatus)
-        {
-            // TODO: is this O(n) access?
-            //m_Vehicles[i_LicenseNumber].status = i_
-        }
-        public void InflateToMax()
-        {
+    //public void ChangeVehicleStatus()
+    //{
+    //    //public void ChangeVehicleStatus(int i_LicenseNumber, eStatus VehicleStatus)
+    //    {
+    //        // TODO: is this O(n) access?
+    //        //m_Vehicles[i_LicenseNumber].status = i_
+    //    }
+    //    public void InflateToMax()
+    //    {
 
-        }
-        public void FuelCar(int i_LicenseNumber, eEnergySource iEnergySource, float iAmount)
-        {
+    //    }
+    //    public void FuelCar(int i_LicenseNumber, eEnergySource iEnergySource, float iAmount)
+    //    {
 
-        }
-        public void ChargeCar(int i_LicenseNumber, float iAmount)
-        {
+    //    }
+    //    public void ChargeCar(int i_LicenseNumber, float iAmount)
+    //    {
 
-        }
-        private void DisplayCarData(int i_LicenseNumber)
-        {
+    //    }
+    //    private void DisplayCarData(int i_LicenseNumber)
+    //    {
 
-        }
+    //    }
 
     }
