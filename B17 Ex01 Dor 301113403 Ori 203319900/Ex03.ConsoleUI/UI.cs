@@ -6,7 +6,6 @@ using Ex03.GarageLogic;
 
 public class UI
 {
-
     private enum eMenuOptions
     {
         Register_Vehicle = 1,
@@ -18,17 +17,18 @@ public class UI
         Display_Vehicle_Data
     }
 
-    public void RunGarage()
-    {
-        this.DisplayMainMenu();
-        this.InputUsersChoice();
-    }
-
     private GarageManager m_GarageManager;
 
     public UI()
     {
         m_GarageManager = new GarageManager();
+    }
+
+    public void RunGarage()
+    {
+        this.DisplayMainMenu();
+        eMenuOptions usersChoice = InputUsersChoice();
+        this.routeToMethod(usersChoice);
     }
 
     public void DisplayMainMenu()
@@ -60,12 +60,11 @@ public class UI
 
     //}
 
-    public void InputUsersChoice()
+    private eMenuOptions InputUsersChoice()
     {
         // TODO: change to try parse
-        eMenuOptions usersChoice = (eMenuOptions)Enum.Parse(typeof(eMenuOptions), Console.ReadLine());
-        //typeof(GarageManager).GetMethod("DisplayMainMenu").Invoke(this, new[] { "world" });
-        this.routeToMethod(usersChoice);
+        string userInput = Console.ReadLine();
+        return (eMenuOptions)Enum.Parse(typeof(eMenuOptions), userInput);
     }
 
     private void routeToMethod(eMenuOptions i_UsersChoice)
@@ -97,6 +96,8 @@ public class UI
                 break;
         }
     }
+
+    // Register Vehicle
 
     private void registerVehicleMenu()
     {
@@ -159,52 +160,7 @@ Please choose from the above list
         return parsedInput;
     }
 
-    //private void displayVehicleListMenu()
-    //{        
-    //    foreach (var  m_GarageManager.vehicles)
-    //    {
-
-    //    }
-    //}
-
-    //private void changeVehicleStatusMenu()
-    //{
-
-    //}
-
-    //private void inflateWheelsMenu()
-    //{
-
-    //}
-
-    //private void refuelGasMenu()
-    //{
-
-    //}
-
-    //private void rechargeElectricMenu()
-    //{
-
-    //}
-
-    //private void displayVehicleDataMenu()
-    //{
-
-    //}
-    //public void RegisterVehicle(int i_LicenseNumber)
-    //{
-    //    string message = String.Format(
-    //        @"Please insert the car's license number:"
-    //    );
-
-    //    string userInput = Console.ReadLine();
-    //    public Vehicle(string i_ModelName, string i_LicenseNumber, eEnergySource i_EnergySource,
-    //        float maxEnergyCapacity, string i_OwnerName, string i_OwnerPhone)
-    //    {
-
-    //        Vehicle newVehicle = new Vehicle();
-    //        m_Vehicles.Add();
-    //    }
+   
 
     //public void ShowVehicleListByStatus(eStatus VehicleStatus)
     //{
@@ -234,29 +190,5 @@ Please choose from the above list
     //        }
     //    }
     //}
-
-    //public void ChangeVehicleStatus()
-    //{
-    //    //public void ChangeVehicleStatus(int i_LicenseNumber, eStatus VehicleStatus)
-    //    {
-    //        // TODO: is this O(n) access?
-    //        //m_Vehicles[i_LicenseNumber].status = i_
-    //    }
-    //    public void InflateToMax()
-    //    {
-
-    //    }
-    //    public void FuelCar(int i_LicenseNumber, eEnergySource iEnergySource, float iAmount)
-    //    {
-
-    //    }
-    //    public void ChargeCar(int i_LicenseNumber, float iAmount)
-    //    {
-
-    //    }
-    //    private void DisplayCarData(int i_LicenseNumber)
-    //    {
-
-    //    }
 
 }
