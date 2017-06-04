@@ -15,10 +15,10 @@ namespace Ex03.GarageLogic
             m_Vehicles = new Dictionary<string, Vehicle>();
         }
 
-        public void RegisterVehicle(eVehicleType i_VehicleType ,Dictionary<eVehicleAttribute, object> i_VehicleData)
+        public void RegisterVehicle(eVehicleType i_VehicleType ,Dictionary<eVehicleAttribute, object> i_VehicleData, out bool o_IsExist)
         {
             string licenseNumber = (string)i_VehicleData[eVehicleAttribute.LicenseNumber];
-            if (Vehicles.ContainsKey(licenseNumber))
+            if (o_IsExist = Vehicles.ContainsKey(licenseNumber))
             {
                 Vehicles[licenseNumber].Status = eStatus.InRepair;
             }
@@ -50,6 +50,29 @@ namespace Ex03.GarageLogic
 
             vehicleAttributes.AddRange(Vehicle.ObjectCreationList);
             return vehicleAttributes;
+        }
+
+        public void ChangeVehicleStatus(string i_LicenseNumber, eStatus i_newStatus)
+        {
+            m_Vehicles[i_LicenseNumber].Status = i_newStatus;
+        }
+
+        public void InflateWheels(string i_LicenseNumber)
+        {
+            foreach (var wheel in m_Vehicles[i_LicenseNumber].Wheels)
+            {
+                wheel.Inflate(wheel.MaxAirPressure - wheel.CurrAirPressure);
+            }
+        }
+
+        public void ChargeVehicle(string i_LicenseNumber, float i_minutesToCharge)
+        {
+            m_Vehicles[i_LicenseNumber].FillEnergySource(i_minutesToCharge, eEnergySource.Electric);
+        }
+
+        public void FuelVehicle(string i_LicenseNumber, eEnergySource i_SelectedFuel, float i_Liters)
+        {
+            m_Vehicles[i_LicenseNumber].FillEnergySource(i_Liters, i_SelectedFuel);
         }
     }
 }

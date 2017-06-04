@@ -13,15 +13,6 @@ namespace Ex03.GarageLogic
         Truck
     }
 
-    public enum eSupportedVehicle
-    {
-        RregularBike,
-        ElectricBike,
-        RegularCar,
-        ElectricCar,
-        Truck
-    }
-
     public enum eVehicleAttribute
     {
         ModelName,

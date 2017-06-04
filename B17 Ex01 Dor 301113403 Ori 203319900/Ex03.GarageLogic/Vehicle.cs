@@ -47,7 +47,7 @@ namespace Ex03.GarageLogic
             m_EnergyTank = new EnergyTank(i_EnergySource, i_MaxEnergyCapacity, i_CurrEnergyStatus);
             Wheels = new List<Wheel>();
             m_Owner = new Owner(i_OwnerName, i_OwnerPhone);
-            Status = eStatus.InRepair;
+            m_Status = eStatus.InRepair;
         }
 
         public Vehicle()
