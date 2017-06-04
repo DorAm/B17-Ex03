@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
-    public class Truck : Vehicle
+    public sealed class Truck : Vehicle
     {
         private static readonly List<Tuple<Type, eVehicleAttribute>> s_InheritedObjectCreationList = new List<Tuple<Type, eVehicleAttribute>> {
             Tuple.Create(typeof(bool), eVehicleAttribute.IsHazmat),

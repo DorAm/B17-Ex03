@@ -10,7 +10,7 @@ namespace Ex03.GarageLogic
         Paid
     }
 
-    public class Vehicle
+    public abstract class Vehicle
     {
         private string m_ModelName;
         private string m_LicenceNumber;

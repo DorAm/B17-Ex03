@@ -6,7 +6,8 @@ namespace Ex03.GarageLogic
 {
     public class GarageManager
     {
-        private Dictionary<string,Vehicle> m_Vehicles = null;
+        List<Vehicle> m_Vehicles = new List<Vehicle>();
+        public List<Vehicle> Vehicles { get => m_Vehicles; }
 
         public GarageManager()
         {

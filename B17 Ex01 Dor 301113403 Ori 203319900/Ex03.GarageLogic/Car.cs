@@ -11,7 +11,7 @@ namespace Ex03.GarageLogic
         Blue
     }
 
-    public class Car : Vehicle
+    public sealed class Car : Vehicle
     {
         private static readonly List<Tuple<Type, eVehicleAttribute>> s_InheritedObjectCreationList = new List<Tuple<Type, eVehicleAttribute>>
         {
