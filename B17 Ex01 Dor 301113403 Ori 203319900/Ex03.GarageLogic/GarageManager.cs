@@ -6,8 +6,9 @@ namespace Ex03.GarageLogic
 {
     public class GarageManager
     {
-        List<Vehicle> m_Vehicles = new List<Vehicle>();
-        public List<Vehicle> Vehicles { get => m_Vehicles; }
+        private Dictionary<string,Vehicle> m_Vehicles = null;
+
+        public Dictionary<string, Vehicle> Vehicles { get => m_Vehicles; }
 
         public GarageManager()
         {
@@ -17,13 +18,13 @@ namespace Ex03.GarageLogic
         public void RegisterVehicle(eVehicleType i_VehicleType ,Dictionary<eVehicleAttribute, object> i_VehicleData)
         {
             string licenseNumber = (string)i_VehicleData[eVehicleAttribute.LicenseNumber];
-            if (m_Vehicles.ContainsKey(licenseNumber))
+            if (Vehicles.ContainsKey(licenseNumber))
             {
-                m_Vehicles[licenseNumber].Status = eStatus.InRepair;
+                Vehicles[licenseNumber].Status = eStatus.InRepair;
             }
             else
             {
-                m_Vehicles.Add(licenseNumber, VehicleFactory.BuildNewVehicle(i_VehicleType, i_VehicleData));
+                Vehicles.Add(licenseNumber, VehicleFactory.BuildNewVehicle(i_VehicleType, i_VehicleData));
             }
         }
 
