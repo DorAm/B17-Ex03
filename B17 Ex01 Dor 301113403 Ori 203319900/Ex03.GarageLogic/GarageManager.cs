@@ -30,7 +30,7 @@ namespace Ex03.GarageLogic
 
         public List<Tuple<Type, eVehicleAttribute>> GetVehicleAttributes(eVehicleType i_VehicleType)
         {
-            List<Tuple<Type, eVehicleAttribute>> vehicleAttributes;
+            List<Tuple<Type, eVehicleAttribute>> vehicleAttributes = new List<Tuple<Type, eVehicleAttribute>>();
 
             switch (i_VehicleType)
             {
