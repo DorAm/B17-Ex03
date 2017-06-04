@@ -37,7 +37,8 @@ public class UI
         while (choice != eUsersChoice.Quit)
         {
             this.displayMainMenu();
-            this.routeToMethod(InputUsersChoice());
+            eMenuOptions usersChoice = (eMenuOptions)inputDataFromUser(typeof(eMenuOptions));
+            this.routeToMethod(usersChoice);
             Console.WriteLine(@"
 ================================================
     1 - Return to main menu    |    2 - Quit          
@@ -52,9 +53,44 @@ public class UI
     {
         printHeading("DorOri's Garage", "Please choose:");
         printListFromEnum(typeof(eMenuOptions));
-        Console.WriteLine(@"
-==========================="
-        );
+    }
+
+    // == Input Validation ==
+
+    private object inputDataFromUser(Type i_InputType)
+    {
+        string userInput = Console.ReadLine();        
+        while (isInvalidValidOption(i_InputType, userInput))
+        {
+            Console.WriteLine("Invalid input, please re-enter your choice");
+            userInput = Console.ReadLine();
+        }
+        return Enum.Parse(i_InputType, userInput);
+    }
+
+    private Boolean isInvalidValidOption(Type i_ValidOptions, string i_UserInput)
+    {
+        bool isInvalidInput = false;
+        bool ignoreCase = true;
+        try
+        {
+            object userInput = Enum.Parse(i_ValidOptions, i_UserInput, ignoreCase);
+            isInvalidInput = Enum.IsDefined(i_ValidOptions, i_UserInput);
+        }
+        catch(ArgumentNullException aNullExp)
+        {
+            aNullExp.Message.ToString();
+        }
+        catch (ArgumentException aExp)
+        {
+            aExp.Message.ToString();
+        }
+        catch (OverflowException oExp)
+        {
+            oExp.Message.ToString();
+        }
+
+        return isInvalidInput;
     }
 
     private eMenuOptions InputUsersChoice()
@@ -118,47 +154,25 @@ public class UI
             index++;
             Console.WriteLine("{0}. {1}", index, enumType.ToString());
         }
-    }
-
-    // == Input Validation ==
-
-    private object inputDataFromUser(Type i_InputType)
-    {
-        string userInput = Console.ReadLine();
-        while (isInvalidValidOption(i_InputType, userInput))
-        {
-            Console.WriteLine("Invalid input, please re-enter your choice");
-            userInput = Console.ReadLine();
-        }
-        return Enum.Parse(i_InputType, userInput);
-    }
-
-    private Boolean isInvalidValidOption(Type i_ValidOptions, string i_UserInput)
-    {
-        //return i_ValidOptions.IsDefined(i_ValidOptions, i_UserInput);
-        return false;
+        Console.WriteLine(@"
+===========================");
     }
 
     // == Register Vehicle ==
 
     private void registerVehicleMenu()
     {
-        printHeading("Register a new vehicle", "Which vehicle would you like to register?");
+        //printHeading("Register a new vehicle", "Which vehicle would you like to register?");
+        //printListFromEnum(typeof(eVehicleType));
 
-        Array vehicleTypes = Enum.GetValues(typeof(eVehicleType));
-        ushort index = 1;
-        foreach (var vehicleType in vehicleTypes)
-        {
-            Console.WriteLine("{0}. {1}", index, vehicleType.ToString());
-            index++;
-        }
-        Console.WriteLine(@"
-Please choose from the above list
-        ");
-
-        eVehicleType chosenVehicleType = (eVehicleType)Enum.Parse(typeof(eVehicleType), Console.ReadLine());
-        Dictionary<eVehicleAttribute, object> vehicleData = inputVehicleData(chosenVehicleType);
-        m_GarageManager.RegisterVehicle(chosenVehicleType, vehicleData);
+        //eVehicleType chosenVehicleType = (eVehicleType)Enum.Parse(typeof(eVehicleType), Console.ReadLine());
+        //Dictionary<eVehicleAttribute, object> vehicleData = inputVehicleData(chosenVehicleType);
+        //bool o_DoesExistInGarage;
+        //m_GarageManager.RegisterVehicle(chosenVehicleType, vehicleData, out o_DoesExistInGarage);
+        //if (doesVehicleExistInGarage == true)
+        //{
+        //    Console.WriteLine("Vehicle with this license number is already in the garage");
+        //}
     }
 
     private Dictionary<eVehicleAttribute, object> inputVehicleData(eVehicleType i_ChosenVehicleType)
