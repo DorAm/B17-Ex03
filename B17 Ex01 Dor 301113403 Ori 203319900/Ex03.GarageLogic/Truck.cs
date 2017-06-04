@@ -12,14 +12,31 @@ namespace Ex03.GarageLogic
 
         private bool m_IsHazMat;
         private float m_MaxLoad;
+        private const int k_NumOfWheels = 12;
 
-        public Truck(Dictionary<eVehicleAttribute, object> i_VehicleAttributs) : base((string)i_VehicleAttributs[eVehicleAttribute.ModelName], (string)i_VehicleAttributs[eVehicleAttribute.LicenseNumber],
-            (eEnergySource)i_VehicleAttributs[eVehicleAttribute.EnergySource], (float)i_VehicleAttributs[eVehicleAttribute.MaxEnergyCapacity],
+        public static List<Tuple<Type, eVehicleAttribute>> InheritedObjectCreationList { get => s_InheritedObjectCreationList; }
+        public bool IsHazMat { get => m_IsHazMat; }
+        public float MaxLoad { get => m_MaxLoad; }
+
+        public Truck(Dictionary<eVehicleAttribute, object> i_VehicleAttributs) : base
+            ((string)i_VehicleAttributs[eVehicleAttribute.ModelName], 
+            (string)i_VehicleAttributs[eVehicleAttribute.LicenseNumber],
+            (eEnergySource)i_VehicleAttributs[eVehicleAttribute.EnergySource], 
+            (float)i_VehicleAttributs[eVehicleAttribute.MaxEnergyCapacity],
             (float)i_VehicleAttributs[eVehicleAttribute.CurrentEnergyStatus],
             (string)i_VehicleAttributs[eVehicleAttribute.WheelManufacturer],
             (float)i_VehicleAttributs[eVehicleAttribute.WheelMaxAirPressure],
-            (float)i_VehicleAttributs[eVehicleAttribute.WheelCurrentAirPressure], (string)i_VehicleAttributs[eVehicleAttribute.OwnerName], (string)i_VehicleAttributs[eVehicleAttribute.OwnerPhoneNumber])
+            (float)i_VehicleAttributs[eVehicleAttribute.WheelCurrentAirPressure], 
+            (string)i_VehicleAttributs[eVehicleAttribute.OwnerName], 
+            (string)i_VehicleAttributs[eVehicleAttribute.OwnerPhoneNumber])
         {
+            for (int i = 0; i < k_NumOfWheels; i++)
+            {
+                this.Wheels.Add(new Wheel((string)i_VehicleAttributs[eVehicleAttribute.WheelManufacturer],
+                    (float)i_VehicleAttributs[eVehicleAttribute.WheelMaxAirPressure],
+                    (float)i_VehicleAttributs[eVehicleAttribute.WheelCurrentAirPressure]));
+            }
+
             m_IsHazMat = (bool)i_VehicleAttributs[eVehicleAttribute.IsHazmat];
             m_MaxLoad = (float)i_VehicleAttributs[eVehicleAttribute.MaxLoad];
         }
@@ -30,12 +47,14 @@ namespace Ex03.GarageLogic
         : base(i_ModelName, i_LicenseNumber, i_EnergySource, i_MaxEnergyCapacity, i_CurrEnergyStatus, i_WheelManufaturer,
             i_MaxAirPressure, i_CurrAirPressure, i_OwnerName, i_OwnerPhone)
         {
+            for (int i = 0; i < k_NumOfWheels; i++)
+            {
+                this.Wheels.Add(new Wheel(i_WheelManufaturer,i_MaxAirPressure, i_CurrAirPressure));
+            }
+
             this.m_IsHazMat = i_IsHazMat;
             this.m_MaxLoad = i_MaxLoad;
         }
 
-        public static List<Tuple<Type, eVehicleAttribute>> InheritedObjectCreationList { get => s_InheritedObjectCreationList; }
-        public bool IsHazMat { get => m_IsHazMat; }
-        public float MaxLoad { get => m_MaxLoad; }
     }
 }

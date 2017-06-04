@@ -36,6 +36,7 @@ namespace Ex03.GarageLogic
         public string ModelName { get => m_ModelName; }
         public string LicenceNumber { get => m_LicenceNumber; }
         public eStatus Status { get => m_Status; set => m_Status = value; }
+        public List<Wheel> Wheels { get => m_Wheels; set => m_Wheels = value; }
 
         public Vehicle(string i_ModelName, string i_LicenseNumber, eEnergySource i_EnergySource,
             float i_MaxEnergyCapacity, float i_CurrEnergyStatus,string i_WheelManufaturer,
@@ -44,7 +45,7 @@ namespace Ex03.GarageLogic
             m_ModelName = i_ModelName;
             m_LicenceNumber = i_LicenseNumber;
             m_EnergyTank = new EnergyTank(i_EnergySource, i_MaxEnergyCapacity, i_CurrEnergyStatus);
-            m_Wheels = new List<Wheel>();
+            Wheels = new List<Wheel>();
             m_Owner = new Owner(i_OwnerName, i_OwnerPhone);
             Status = eStatus.InRepair;
         }
@@ -56,7 +57,7 @@ namespace Ex03.GarageLogic
         public void InflateWheelsToMax()
         {
 
-            foreach (Wheel item in m_Wheels)
+            foreach (Wheel item in Wheels)
             {
                 float airToAdd = item.MaxAirPressure - item.CurrAirPressure;
                 item.Inflate(airToAdd);
