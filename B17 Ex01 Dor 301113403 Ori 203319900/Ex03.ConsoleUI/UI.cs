@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Ex03.GarageLogic;
 
 
@@ -24,6 +25,11 @@ public class UI
     }
 
     private GarageManager m_GarageManager;
+
+    public UI()
+    {
+        m_GarageManager = new GarageManager();
+    }
 
     public void RunGarage()
     {
@@ -69,21 +75,21 @@ public class UI
             case eMenuOptions.Display_Vehicle_List:
                 DisplayVehicleListByStatusMenu();
                 break;
-            case eMenuOptions.Change_Vehicle_Status:
-                changeVehicleStatusMenu();
-                break;
-            case eMenuOptions.Inflate_Wheels:
-                inflateWheelsMenu();
-                break;
+            //case eMenuOptions.Change_Vehicle_Status:
+            //    changeVehicleStatusMenu();
+            //    break;
+            //case eMenuOptions.Inflate_Wheels:
+            //    inflateWheelsMenu();
+            //    break;
             //case eMenuOptions.Refuel_Gas:
             //    refuelGasMenu();
             //    break;
             //case eMenuOptions.Recharge_Electric:
             //    rechargeElectricMenu();
             //    break;
-            case eMenuOptions.Display_Vehicle_Data:
-                DisplayVehicleDataMenu();
-                break;
+            //case eMenuOptions.Display_Vehicle_Data:
+            //    DisplayVehicleDataMenu();
+            //    break;
             default:
                 break;
         }
@@ -151,8 +157,8 @@ Please choose from the above list
         ");
 
         eVehicleType chosenVehicleType = (eVehicleType)Enum.Parse(typeof(eVehicleType), Console.ReadLine());
-        Dictionary<string, object> vehicleData = inputVehicleData(chosenVehicleType);
-        //m_GarageManager.RegisterVehicle(vehicleData);
+        Dictionary<eVehicleAttribute, object> vehicleData = inputVehicleData(chosenVehicleType);
+        m_GarageManager.RegisterVehicle(chosenVehicleType, vehicleData);
     }
 
     private Dictionary<eVehicleAttribute, object> inputVehicleData(eVehicleType i_ChosenVehicleType)
@@ -179,7 +185,8 @@ Please choose from the above list
         object parsedInput;
         if (i_AttributesType.IsEnum)
         {
-            parsedInput = Enum.Parse(i_AttributesType, i_UserInput);
+            bool i_IgnoreCase = true;
+            parsedInput = Enum.Parse(i_AttributesType, i_UserInput, i_IgnoreCase);
         }
         else
         {
@@ -191,18 +198,11 @@ Please choose from the above list
     // == Display Vehicle List By Status ==
     public void DisplayVehicleListByStatusMenu()
     {
-        //List<Vehicle> vehicles = new List<Vehicle>()
-        //{
-        //    new Vehicle("Mazda", "L125215", eEnergySource.Electric, 100, 60, "Dor", "104215"),
-        //    new Vehicle("Pegueot", "L56458", eEnergySource.Octan95, 120, 60, "Ori", "23906832"),
-        //    new Vehicle("Fiat", "L51205809", eEnergySource.Soler, 1000, 650, "Dana", "01285125"),
-        //    new Vehicle("Subaru", "L238512", eEnergySource.Octan98, 1000, 1, "Greg", "0582951")
-        //};
-        List<Vehicle> vehicles = this.m_GarageManager.Vehicles;
+        Dictionary<string, Vehicle> vehicles = m_GarageManager.Vehicles;
 
         printHeading("Vehicle List (by status)", "Select which vehicles you want to view: ");
         printListFromEnum(typeof(eStatus));
-        eStatus chosenFilter = (eStatus) inputDataFromUser(typeof(eStatus));
+        eStatus chosenFilter = (eStatus)inputDataFromUser(typeof(eStatus));
 
         // Displaying the list:
         this.printHeading("Vehicle List (by status)", "Vehicles currently in garage:");
@@ -210,10 +210,10 @@ Please choose from the above list
         int index = 0;
         foreach (var vehicle in vehicles)
         {
-            if (vehicle.Status == chosenFilter)
+            if (vehicle.Value.Status == chosenFilter)
             {
                 index++;
-                Console.WriteLine(@"{0}. {1}", index, vehicle.LicenceNumber);
+                Console.WriteLine(@"{0}. {1}", index, vehicle.Value.LicenceNumber);
             }
         }
         if (index == 0)
@@ -223,23 +223,23 @@ Please choose from the above list
     }
 
     // == Change Vehicle Status ==
-    public void changeVehicleStatusMenu()
-    {
-        printHeading("Change Vehicle Status:", "please enter vehicle's license number and the new status:");
-        string licenseNumber = Console.ReadLine();
-        string newStatus = Console.ReadLine();
-        Vehicle vehicle = m_GarageManager.getVehicle(licenseNumber);
-        vehicle.Status = (eStatus)Enum.Parse(typeof(eStatus), newStatus);            
-    }
+    //public void changeVehicleStatusMenu()
+    //{
+    //    printHeading("Change Vehicle Status:", "please enter vehicle's license number and the new status:");
+    //    string licenseNumber = Console.ReadLine();
+    //    string newStatus = Console.ReadLine();        
+    //    Vehicle vehicle = m_GarageManager.GetVehicle(licenseNumber);
+    //    vehicle.Status = (eStatus)Enum.Parse(typeof(eStatus), newStatus);            
+    //}
 
     // == Inflate Wheels ==
-    private void inflateWheelsMenu()
-    {
-        printHeading("Inflate Vehicle Wheels:", "please enter vehicle's license number:");
-        string licenseNumber = Console.ReadLine();
-        Vehicle vehicle = m_GarageManager.getVehicle(licenseNumber);
-        vehicle.InflateWheelsToMax();
-    }
+    //private void inflateWheelsMenu()
+    //{
+    //    printHeading("Inflate Vehicle Wheels:", "please enter vehicle's license number:");
+    //    string licenseNumber = Console.ReadLine();
+    //    Vehicle vehicle = m_GarageManager.getVehicle(licenseNumber);
+    //    vehicle.InflateWheelsToMax();
+    //}
 
     // == Refuel Gas ==
     private void refuelGasMenu()
@@ -249,12 +249,13 @@ Please choose from the above list
         //Vehicle vehicle = m_GarageManager.getVehicle(licenseNumber);
         //vehicle.FillEnergySource();
     }
+
     // == Display Vehicle Data By License Number
-    public void DisplayVehicleDataMenu()
-    {
-        printHeading("Vehicle Data:", "please enter vehicle's license number:");
-        string licenseNumber = Console.ReadLine();
-        Vehicle vehicle = m_GarageManager.getVehicle(licenseNumber);
-        Console.WriteLine(vehicle.ToString());
-    }
+    //public void DisplayVehicleDataMenu()
+    //{
+    //    printHeading("Vehicle Data:", "please enter vehicle's license number:");
+    //    string licenseNumber = Console.ReadLine();
+    //    Vehicle vehicle = m_GarageManager.getVehicle(licenseNumber);
+    //    Console.WriteLine(vehicle.ToString());
+    //}
 }

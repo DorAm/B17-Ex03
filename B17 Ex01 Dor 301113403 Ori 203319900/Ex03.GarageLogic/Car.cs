@@ -16,7 +16,7 @@ namespace Ex03.GarageLogic
         private static readonly List<Tuple<Type, eVehicleAttribute>> s_InheritedObjectCreationList = new List<Tuple<Type, eVehicleAttribute>>
         {
             Tuple.Create(typeof(eColor), eVehicleAttribute.Color),
-            Tuple.Create(typeof(float), eVehicleAttribute.NumOfDoors)
+            Tuple.Create(typeof(int), eVehicleAttribute.NumOfDoors)
         };
 
         private const int k_NumOfWheels = 4;

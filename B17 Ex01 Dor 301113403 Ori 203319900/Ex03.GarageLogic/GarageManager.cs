@@ -6,13 +6,13 @@ namespace Ex03.GarageLogic
 {
     public class GarageManager
     {
-        private Dictionary<string,Vehicle> m_Vehicles = null;
+        private Dictionary<string, Vehicle> m_Vehicles = null;
 
         public Dictionary<string, Vehicle> Vehicles { get => m_Vehicles; }
 
         public GarageManager()
         {
-
+            m_Vehicles = new Dictionary<string, Vehicle>();
         }
 
         public void RegisterVehicle(eVehicleType i_VehicleType ,Dictionary<eVehicleAttribute, object> i_VehicleData)
@@ -30,7 +30,7 @@ namespace Ex03.GarageLogic
 
         public List<Tuple<Type, eVehicleAttribute>> GetVehicleAttributes(eVehicleType i_VehicleType)
         {
-            List<Tuple<Type, eVehicleAttribute>> vehicleAttributes;
+            List<Tuple<Type, eVehicleAttribute>> vehicleAttributes = null;
 
             switch (i_VehicleType)
             {
@@ -46,12 +46,9 @@ namespace Ex03.GarageLogic
                     vehicleAttributes = Truck.InheritedObjectCreationList;
 
                     break;
-
-                default:
-                    vehicleAttributes = Vehicle.ObjectCreationList;
-                    break;
             }
 
+            vehicleAttributes.AddRange(Vehicle.ObjectCreationList);
             return vehicleAttributes;
         }
     }
