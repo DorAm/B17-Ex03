@@ -116,16 +116,15 @@ public class UI
 
     // == Input Validation ==
 
-    private string inputDataFromUser(Type i_DataType)
+    private object inputDataFromUser(Type i_InputType)
     {
         string userInput = Console.ReadLine();
-        while (isInvalidValidOption(i_DataType, userInput))
+        while (isInvalidValidOption(i_InputType, userInput))
         {
             Console.WriteLine("Invalid input, please re-enter your choice");
             userInput = Console.ReadLine();
         }
-        //return Enum.Parse(i_DataType, "safsa");
-        return userInput;
+        return Enum.Parse(i_InputType, userInput);
     }
 
     private Boolean isInvalidValidOption(Type i_ValidOptions, string i_UserInput)
