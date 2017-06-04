@@ -155,20 +155,20 @@ Please choose from the above list
         //m_GarageManager.RegisterVehicle(vehicleData);
     }
 
-    private Dictionary<string, object> inputVehicleData(eVehicleType i_ChosenVehicleType)
+    private Dictionary<eVehicleAttribute, object> inputVehicleData(eVehicleType i_ChosenVehicleType)
     {
         // Reading attributes from the user according to the type of vehicle:
-        List<Tuple<Type, string>> vehicleAttributes = m_GarageManager.GetVehicleAttributes(i_ChosenVehicleType);
-        Dictionary<string, object> vehicleData = new Dictionary<string, object>();
+        List<Tuple<Type, eVehicleAttribute>> vehicleAttributes = m_GarageManager.GetVehicleAttributes(i_ChosenVehicleType);        
+        Dictionary<eVehicleAttribute, object> vehicleData = new Dictionary<eVehicleAttribute, object>();
 
-        foreach (var vehicleAttribute in vehicleAttributes)
+        foreach (var attribute in vehicleAttributes)
         {
-            Type attributesType = vehicleAttribute.Item1;
-            string attributesName = vehicleAttribute.Item2;
-            Console.WriteLine(@"Please enter {0}", attributesName);
+            Type attributeType = attribute.Item1;
+            eVehicleAttribute attributeName = attribute.Item2;                     
+            Console.WriteLine(@"Please enter {0}", attributeName);
             string userInput = Console.ReadLine();
-            object parsedInput = parseStringToObject(attributesType, userInput);
-            vehicleData.Add(attributesName, Convert.ChangeType(parsedInput, attributesType));
+            object parsedInput = parseStringToObject(attributeType, userInput);
+            vehicleData.Add(attributeName, Convert.ChangeType(parsedInput, attributeType));
         }
 
         return vehicleData;
@@ -191,19 +191,18 @@ Please choose from the above list
     // == Display Vehicle List By Status ==
     public void DisplayVehicleListByStatusMenu()
     {
-        List<Vehicle> vehicles = new List<Vehicle>()
-        {
-            new Vehicle("Mazda", "L125215", eEnergySource.Electric, 100, 60, "Dor", "104215"),
-            new Vehicle("Pegueot", "L56458", eEnergySource.Octan95, 120, 60, "Ori", "23906832"),
-            new Vehicle("Fiat", "L51205809", eEnergySource.Soler, 1000, 650, "Dana", "01285125"),
-            new Vehicle("Subaru", "L238512", eEnergySource.Octan98, 1000, 1, "Greg", "0582951")
-        };
-        //List<Vehicle> vehicles = this.m_GarageManager.Vehicles;
+        //List<Vehicle> vehicles = new List<Vehicle>()
+        //{
+        //    new Vehicle("Mazda", "L125215", eEnergySource.Electric, 100, 60, "Dor", "104215"),
+        //    new Vehicle("Pegueot", "L56458", eEnergySource.Octan95, 120, 60, "Ori", "23906832"),
+        //    new Vehicle("Fiat", "L51205809", eEnergySource.Soler, 1000, 650, "Dana", "01285125"),
+        //    new Vehicle("Subaru", "L238512", eEnergySource.Octan98, 1000, 1, "Greg", "0582951")
+        //};
+        List<Vehicle> vehicles = this.m_GarageManager.Vehicles;
 
         printHeading("Vehicle List (by status)", "Select which vehicles you want to view: ");
         printListFromEnum(typeof(eStatus));
-        string userInput = inputDataFromUser(typeof(eStatus));
-        eStatus chosenFilter = (eStatus)Enum.Parse(typeof(eStatus), userInput);
+        eStatus chosenFilter = (eStatus) inputDataFromUser(typeof(eStatus));
 
         // Displaying the list:
         this.printHeading("Vehicle List (by status)", "Vehicles currently in garage:");
