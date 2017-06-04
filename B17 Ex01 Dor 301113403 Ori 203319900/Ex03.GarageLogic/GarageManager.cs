@@ -6,40 +6,51 @@ namespace Ex03.GarageLogic
 {
     public class GarageManager
     {
-        private List<Vehicle> m_Vehicles = null;
+        private Dictionary<string,Vehicle> m_Vehicles = null;
 
         public GarageManager()
         {
 
         }
 
-        public List<Tuple<Type, string>> GetVehicleAttributes(eVehicleType i_VehicleType)
+        public void RegisterVehicle(eVehicleType i_VehicleType ,Dictionary<eVehicleAttribute, object> i_VehicleData)
         {
-            List<Tuple<Type, string>> vehicleAttributes = new List<Tuple<Type, string>>();
-            Type vehicleActualType = Type.GetType("Ex03.GarageLogic." + i_VehicleType.ToString());
-            createMembersList(vehicleActualType, ref vehicleAttributes);
-            createMembersList(typeof(Vehicle), ref vehicleAttributes);
-
-            return vehicleAttributes;
+            string licenseNumber = (string)i_VehicleData[eVehicleAttribute.LicenseNumber];
+            if (m_Vehicles.ContainsKey(licenseNumber))
+            {
+                m_Vehicles[licenseNumber].Status = eStatus.InRepair;
+            }
+            else
+            {
+                m_Vehicles.Add(licenseNumber, VehicleFactory.BuildNewVehicle(i_VehicleType, i_VehicleData));
+            }
         }
 
-        private void createMembersList(Type i_VehicleActualType, ref List<Tuple<Type, string>> io_VehicleAttributes)
+        public List<Tuple<Type, eVehicleAttribute>> GetVehicleAttributes(eVehicleType i_VehicleType)
         {
-            FieldInfo[] vehicleMembers = i_VehicleActualType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+            List<Tuple<Type, eVehicleAttribute>> vehicleAttributes;
 
-            foreach (var member in vehicleMembers)
+            switch (i_VehicleType)
             {
-                Type memberType = member.FieldType;
-                if (memberType.Name == "EnergyTank" || memberType.Name == "Owner" || memberType.Name == "Wheel")
-                {
-                    createMembersList(memberType, ref io_VehicleAttributes);
-                    continue;
-                }
+                case eVehicleType.Car:
+                    vehicleAttributes = Car.InheritedObjectCreationList;
 
-                Tuple<Type, string> requestedAttribute = new Tuple<Type, string>(member.FieldType, member.Name);
-                io_VehicleAttributes.Add(requestedAttribute);
+                    break;
+                case eVehicleType.Motorcycle:
+                    vehicleAttributes = Motorcycle.InheritedObjectCreationList;
+
+                    break;
+                case eVehicleType.Truck:
+                    vehicleAttributes = Truck.InheritedObjectCreationList;
+
+                    break;
+
+                default:
+                    vehicleAttributes = Vehicle.ObjectCreationList;
+                    break;
             }
 
+            return vehicleAttributes;
         }
     }
 }

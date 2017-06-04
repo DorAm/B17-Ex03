@@ -22,31 +22,53 @@ namespace Ex03.GarageLogic
         Truck
     }
 
-    public class VehicleFactory
+    public enum eVehicleAttribute
     {
-        public Vehicle BuildNewVehicle(eSupportedVehicle i_Type, Dictionary<string,object> i_VehicleAttributs)
+        ModelName,
+        LicenseNumber,
+        EnergySource,
+        MaxEnergyCapacity,
+        CurrentEnergyStatus,
+        WheelManufacturer,
+        WheelMaxAirPressure,
+        WheelCurrentAirPressure,
+        OwnerName,
+        OwnerPhoneNumber,
+        LicenseType,
+        EngineVolume,
+        Color,
+        NumOfDoors,
+        IsHazmat,
+        MaxLoad
+    }
+
+
+    public static class VehicleFactory
+    {
+        public static Vehicle BuildNewVehicle(eVehicleType i_Type, Dictionary<eVehicleAttribute,object> i_VehicleAttributs)
         {
+
+            Vehicle newVehicle;
+
             switch (i_Type)
             {
-                case eSupportedVehicle.RregularBike:
-
+                case eVehicleType.Car:
+                    newVehicle = new Car(i_VehicleAttributs);
                     break;
-                case eSupportedVehicle.ElectricBike:
+                case eVehicleType.Motorcycle:
+                    newVehicle = new Motorcycle(i_VehicleAttributs);
                     break;
-                case eSupportedVehicle.RegularCar:
-                    break;
-                case eSupportedVehicle.ElectricCar:
-                    break;
-                case eSupportedVehicle.Truck:
+                case eVehicleType.Truck:
+                    newVehicle = new Truck(i_VehicleAttributs);
                     break;
                 default:
+                    newVehicle = null;
                     break;
             }
 
-            Vehicle dummy = new Vehicle();
-            return dummy;
+            
+            return newVehicle;
         }
-        
-        new Truck(Inputs[m_Tpe], input[])
+
     }
 }
