@@ -11,7 +11,7 @@ namespace Ex03.GarageLogic
         B1
     }
 
-    public class Motorcycle : Vehicle
+    public sealed class Motorcycle : Vehicle
     {
         private eLicenseType m_LicenseType;
         private float m_EngineVolume;
@@ -30,6 +30,7 @@ namespace Ex03.GarageLogic
         : base(i_ModelName, i_LicenseNumber, i_EnergySource, i_MaxEnergyCapacity, i_CurrEnergyStatus, i_WheelManufaturer,
             i_MaxAirPressure, i_CurrAirPressure, i_OwnerName, i_OwnerPhone)
         {
+
             this.m_LicenseType = i_LicenseType;
             this.m_EngineVolume = i_EngineVolume;
         }
