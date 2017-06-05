@@ -79,11 +79,11 @@ public class UI
         }
         catch (ArgumentException aExp)
         {
-            throw new ArgumentOutOfRangeException("there is no such type");
+            throw new ArgumentOutOfRangeException("there is no such type", aExp.InnerException);
         }
         catch(Exception ex)
         {
-            throw new FormatException("there is something wrong with the input");
+            throw new FormatException("there is something wrong with the input", ex.InnerException);
         }
 
         return isInvalidInput;
@@ -197,7 +197,7 @@ public class UI
 
         try
         {
-            if (i_AttributesType.IsEnum && isInvalidValidOption(i_AttributesType, i_UserInput))
+            if (i_AttributesType.IsEnum && isInvalidValidOption(i_AttributesType, i_UserInput) == false)
             {
                 bool i_IgnoreCase = true;
                 parsedInput = Enum.Parse(i_AttributesType, i_UserInput, i_IgnoreCase);
@@ -207,12 +207,12 @@ public class UI
                 parsedInput = Convert.ChangeType(i_UserInput, i_AttributesType);
             }
         }
-        catch (ArgumentException ex)
+        catch (Exception ex)
         {
-            System.Console.WriteLine(ex.ToString());
+            System.Console.WriteLine(ex.Message.ToString());
             System.Console.WriteLine("please try amother input");
             string newUserInput = System.Console.ReadLine();
-            parseStringToObject(i_AttributesType, newUserInput);
+            parsedInput = parseStringToObject(i_AttributesType, newUserInput);
         }
 
         return parsedInput;
