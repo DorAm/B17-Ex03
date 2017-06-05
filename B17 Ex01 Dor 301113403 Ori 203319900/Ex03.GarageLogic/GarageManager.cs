@@ -17,15 +17,16 @@ namespace Ex03.GarageLogic
 
         public void RegisterVehicle(eVehicleType i_VehicleType ,Dictionary<eVehicleAttribute, object> i_VehicleData, out bool o_IsExist)
         {
-            string licenseNumber = (string)i_VehicleData[eVehicleAttribute.LicenseNumber];
-            if (o_IsExist = Vehicles.ContainsKey(licenseNumber))
-            {
-                Vehicles[licenseNumber].Status = eStatus.InRepair;
-            }
-            else
-            {
-                Vehicles.Add(licenseNumber, VehicleFactory.BuildNewVehicle(i_VehicleType, i_VehicleData));
-            }
+
+                string licenseNumber = (string)i_VehicleData[eVehicleAttribute.LicenseNumber];
+                if (o_IsExist = Vehicles.ContainsKey(licenseNumber))
+                {
+                    Vehicles[licenseNumber].Status = eStatus.InRepair;
+                }
+                else
+                {
+                    Vehicles.Add(licenseNumber, VehicleFactory.BuildNewVehicle(i_VehicleType, i_VehicleData));
+                }
         }
 
         public List<Tuple<Type, eVehicleAttribute>> GetVehicleAttributes(eVehicleType i_VehicleType)

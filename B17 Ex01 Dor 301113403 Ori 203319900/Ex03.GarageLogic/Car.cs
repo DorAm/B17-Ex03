@@ -49,15 +49,22 @@ namespace Ex03.GarageLogic
             (string)i_VehicleAttributs[eVehicleAttribute.OwnerName], 
             (string)i_VehicleAttributs[eVehicleAttribute.OwnerPhoneNumber])
         {
-            for (int i = 0; i < k_NumOfWheels; i++)
+            try
             {
-                this.Wheels.Add(new Wheel((string)i_VehicleAttributs[eVehicleAttribute.WheelManufacturer],
-                    (float)i_VehicleAttributs[eVehicleAttribute.WheelMaxAirPressure],
-                    (float)i_VehicleAttributs[eVehicleAttribute.WheelCurrentAirPressure]));
-            }
+                for (int i = 0; i < k_NumOfWheels; i++)
+                {
+                    this.Wheels.Add(new Wheel((string)i_VehicleAttributs[eVehicleAttribute.WheelManufacturer],
+                        (float)i_VehicleAttributs[eVehicleAttribute.WheelMaxAirPressure],
+                        (float)i_VehicleAttributs[eVehicleAttribute.WheelCurrentAirPressure]));
+                }
 
-            m_Color = (eColor)i_VehicleAttributs[eVehicleAttribute.Color];
-            m_NumOfDoors = (int)i_VehicleAttributs[eVehicleAttribute.NumOfDoors];
+                m_Color = (eColor)i_VehicleAttributs[eVehicleAttribute.Color];
+                m_NumOfDoors = (int)i_VehicleAttributs[eVehicleAttribute.NumOfDoors];
+            }
+            catch(Exception ex)
+            {
+                throw new ArgumentNullException("one or more of the car properties have failed to init", ex.InnerException);
+            }
         }
 
     }

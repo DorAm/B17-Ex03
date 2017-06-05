@@ -18,15 +18,15 @@ namespace Ex03.GarageLogic
         private float m_MaxEnergyCapacity;
         private float m_CurrEnergyStatus;
 
-        public float CurrEnergyStatus { get => m_CurrEnergyStatus; }
         public eEnergySource EnergySource { get => m_EnergySource; }
         public float MaxEnergyCapacity { get => m_MaxEnergyCapacity; }
+        public float CurrEnergyStatus { get => m_CurrEnergyStatus; set => m_CurrEnergyStatus = value; }
 
         public void FillEnergySource(float i_EnergyAmountToAdd, eEnergySource i_EnergySource)
         {
-            if (m_CurrEnergyStatus + i_EnergyAmountToAdd <= MaxEnergyCapacity)
+            if (CurrEnergyStatus + i_EnergyAmountToAdd <= MaxEnergyCapacity)
             {
-                m_CurrEnergyStatus += i_EnergyAmountToAdd;
+                CurrEnergyStatus += i_EnergyAmountToAdd;
             }
             else
             {
@@ -37,7 +37,7 @@ namespace Ex03.GarageLogic
         {
             m_EnergySource = i_EnergySource;
             m_MaxEnergyCapacity = i_MaxEnergyCapacity;
-            m_CurrEnergyStatus= i_m_CurrEnergyStatus;
+            CurrEnergyStatus = i_m_CurrEnergyStatus;
         }
     }
 }

@@ -67,34 +67,30 @@ namespace Ex03.GarageLogic
 
         public void FillEnergySource(float i_EnergyAmount, eEnergySource i_EnergySource)
         {
-
+            if (i_EnergyAmount + m_EnergyTank.CurrEnergyStatus <= m_EnergyTank.MaxEnergyCapacity && i_EnergySource == m_EnergyTank.EnergySource)
+            {
+                m_EnergyTank.CurrEnergyStatus = i_EnergyAmount;
+            }
+            else
+            {
+                throw new ArgumentException("invalid energy source or amount has been provided");
+            }
         }
 
         public eEnergySource getEnergyType()
         {
-            return eEnergySource.Electric;
+            return m_EnergyTank.EnergySource;
         }
 
         public float getMaxEnergy()
         {
-            return 1;
+            return m_EnergyTank.MaxEnergyCapacity;
         }
 
         public float getEnergyStatus()
         {
 
-            return 1;
-        }
-    }
-
-    public class failedToInflateException : Exception
-    {
-        int m_WheelIdx;
-
-        public failedToInflateException() { }
-        public failedToInflateException(string i_message, int i_WheelIdx) : base(i_message)
-        {
-            m_WheelIdx = i_WheelIdx;
+            return m_EnergyTank.CurrEnergyStatus;
         }
     }
 }

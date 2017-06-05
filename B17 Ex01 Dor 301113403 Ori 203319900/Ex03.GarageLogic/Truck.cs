@@ -30,15 +30,22 @@ namespace Ex03.GarageLogic
             (string)i_VehicleAttributs[eVehicleAttribute.OwnerName], 
             (string)i_VehicleAttributs[eVehicleAttribute.OwnerPhoneNumber])
         {
-            for (int i = 0; i < k_NumOfWheels; i++)
+            try
             {
-                this.Wheels.Add(new Wheel((string)i_VehicleAttributs[eVehicleAttribute.WheelManufacturer],
-                    (float)i_VehicleAttributs[eVehicleAttribute.WheelMaxAirPressure],
-                    (float)i_VehicleAttributs[eVehicleAttribute.WheelCurrentAirPressure]));
-            }
+                for (int i = 0; i < k_NumOfWheels; i++)
+                {
+                    this.Wheels.Add(new Wheel((string)i_VehicleAttributs[eVehicleAttribute.WheelManufacturer],
+                        (float)i_VehicleAttributs[eVehicleAttribute.WheelMaxAirPressure],
+                        (float)i_VehicleAttributs[eVehicleAttribute.WheelCurrentAirPressure]));
+                }
 
-            m_IsHazMat = (bool)i_VehicleAttributs[eVehicleAttribute.IsHazmat];
-            m_MaxLoad = (float)i_VehicleAttributs[eVehicleAttribute.MaxLoad];
+                m_IsHazMat = (bool)i_VehicleAttributs[eVehicleAttribute.IsHazmat];
+                m_MaxLoad = (float)i_VehicleAttributs[eVehicleAttribute.MaxLoad];
+            }
+            catch(Exception ex)
+            {
+                throw new ArgumentNullException("one or more of the truck properties have failed to init", ex.InnerException);
+            }
         }
 
         public Truck(string i_ModelName, string i_LicenseNumber, eEnergySource i_EnergySource,

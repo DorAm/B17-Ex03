@@ -47,14 +47,21 @@ namespace Ex03.GarageLogic
             (string)i_VehicleAttributs[eVehicleAttribute.OwnerName], 
             (string)i_VehicleAttributs[eVehicleAttribute.OwnerPhoneNumber])
         {
-            for (int i = 0; i < k_NumOfWheels; i++)
+            try
             {
-                this.Wheels.Add(new Wheel((string)i_VehicleAttributs[eVehicleAttribute.WheelManufacturer],
-                    (float)i_VehicleAttributs[eVehicleAttribute.WheelMaxAirPressure],
-                    (float)i_VehicleAttributs[eVehicleAttribute.WheelCurrentAirPressure]));
+                for (int i = 0; i < k_NumOfWheels; i++)
+                {
+                    this.Wheels.Add(new Wheel((string)i_VehicleAttributs[eVehicleAttribute.WheelManufacturer],
+                        (float)i_VehicleAttributs[eVehicleAttribute.WheelMaxAirPressure],
+                        (float)i_VehicleAttributs[eVehicleAttribute.WheelCurrentAirPressure]));
+                }
+                m_EngineVolume = (float)i_VehicleAttributs[eVehicleAttribute.EngineVolume];
+                m_LicenseType = (eLicenseType)i_VehicleAttributs[eVehicleAttribute.LicenseType];
             }
-            m_EngineVolume = (float)i_VehicleAttributs[eVehicleAttribute.EngineVolume];
-            m_LicenseType = (eLicenseType)i_VehicleAttributs[eVehicleAttribute.LicenseType];
+            catch(Exception ex)
+            {
+                throw new ArgumentNullException("one or more of the Motorcycle   properties have failed to init", ex.InnerException);
+            }
         }
 
         public static List<Tuple<Type, eVehicleAttribute>> InheritedObjectCreationList { get => s_InheritedObjectCreationList;  }
