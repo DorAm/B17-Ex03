@@ -192,16 +192,29 @@ public class UI
 
     private object parseStringToObject(Type i_AttributesType, string i_UserInput)
     {
-        object parsedInput;
-        if (i_AttributesType.IsEnum)
+
+        object parsedInput = null;
+
+        try
         {
-            bool i_IgnoreCase = true;
-            parsedInput = Enum.Parse(i_AttributesType, i_UserInput, i_IgnoreCase);
+            if (i_AttributesType.IsEnum && isInvalidValidOption(i_AttributesType, i_UserInput))
+            {
+                bool i_IgnoreCase = true;
+                parsedInput = Enum.Parse(i_AttributesType, i_UserInput, i_IgnoreCase);
+            }
+            else
+            {
+                parsedInput = Convert.ChangeType(i_UserInput, i_AttributesType);
+            }
         }
-        else
+        catch (ArgumentException ex)
         {
-            parsedInput = Convert.ChangeType(i_UserInput, i_AttributesType);
+            System.Console.WriteLine(ex.ToString());
+            System.Console.WriteLine("please try amother input");
+            string newUserInput = System.Console.ReadLine();
+            parseStringToObject(i_AttributesType, newUserInput);
         }
+
         return parsedInput;
     }
 
