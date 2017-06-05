@@ -77,17 +77,13 @@ public class UI
             object userInput = Enum.Parse(i_ValidOptions, i_UserInput, ignoreCase);
             isInvalidInput = Enum.IsDefined(i_ValidOptions, i_UserInput);
         }
-        catch(ArgumentNullException aNullExp)
-        {
-            aNullExp.Message.ToString();
-        }
         catch (ArgumentException aExp)
         {
-            aExp.Message.ToString();
+            throw new ArgumentOutOfRangeException("there is no such type");
         }
-        catch (OverflowException oExp)
+        catch(Exception ex)
         {
-            oExp.Message.ToString();
+            throw new FormatException("there is something wrong with the input");
         }
 
         return isInvalidInput;
