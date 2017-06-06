@@ -33,11 +33,19 @@ namespace Ex03.GarageLogic
                 throw new InvalidOperationException("you can not charge/fuel a vehicle more than its max capacity");
             }
         }
-        public EnergyTank(eEnergySource i_EnergySource, float i_MaxEnergyCapacity, float i_m_CurrEnergyStatus)
+        public EnergyTank(eEnergySource i_EnergySource, float i_MaxEnergyCapacity, float i_CurrEnergyStatus)
         {
-            m_EnergySource = i_EnergySource;
-            m_MaxEnergyCapacity = i_MaxEnergyCapacity;
-            CurrEnergyStatus = i_m_CurrEnergyStatus;
+            if(i_MaxEnergyCapacity >= i_CurrEnergyStatus)
+            {
+                m_EnergySource = i_EnergySource;
+                m_MaxEnergyCapacity = i_MaxEnergyCapacity;
+                CurrEnergyStatus = i_CurrEnergyStatus;
+            }
+            else
+            {
+                throw new ValueOutOfRangeException(0, i_MaxEnergyCapacity);
+            }
+
         }
     }
 }

@@ -171,16 +171,24 @@ public class UI
 
     private void registerVehicleMenu()
     {
-        printHeading("Register a new vehicle", "Which vehicle would you like to register?");
-        StringBuilder outputToPrint = formatToTextFromEnum(typeof(eVehicleType));
-        printFormatedOutput(outputToPrint);
-        eVehicleType chosenVehicleType = (eVehicleType)Enum.Parse(typeof(eVehicleType), Console.ReadLine());
-        Dictionary<eVehicleAttribute, object> vehicleData = inputVehicleData(chosenVehicleType);
-        bool doesExistInGarage;
-        m_GarageManager.RegisterVehicle(chosenVehicleType, vehicleData, out doesExistInGarage);
-        if (doesExistInGarage == true)
+        try
         {
-            Console.WriteLine("Vehicle with this license number is already in the garage");
+            printHeading("Register a new vehicle", "Which vehicle would you like to register?");
+            StringBuilder outputToPrint = formatToTextFromEnum(typeof(eVehicleType));
+            printFormatedOutput(outputToPrint);
+            eVehicleType chosenVehicleType = (eVehicleType)Enum.Parse(typeof(eVehicleType), Console.ReadLine());
+            Dictionary<eVehicleAttribute, object> vehicleData = inputVehicleData(chosenVehicleType);
+            bool doesExistInGarage;
+            m_GarageManager.RegisterVehicle(chosenVehicleType, vehicleData, out doesExistInGarage);
+            if (doesExistInGarage == true)
+            {
+                Console.WriteLine("Vehicle with this license number is already in the garage");
+            }
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            displayMainMenu();
         }
     }
 
