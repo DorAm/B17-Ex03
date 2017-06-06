@@ -188,7 +188,7 @@ public class UI
         catch(Exception ex)
         {
             Console.WriteLine(ex.Message);
-            displayMainMenu();
+            //displayMainMenu();
         }
     }
 
