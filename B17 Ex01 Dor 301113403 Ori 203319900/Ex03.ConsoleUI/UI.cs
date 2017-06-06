@@ -119,21 +119,21 @@ public class UI
             case eMenuOptions.Display_Vehicle_List:
                 DisplayVehicleListByStatusMenu();
                 break;
-            //case eMenuOptions.Change_Vehicle_Status:
-            //    changeVehicleStatusMenu();
-            //    break;
-            //case eMenuOptions.Inflate_Wheels:
-            //    inflateWheelsMenu();
-            //    break;
-            //case eMenuOptions.Refuel_Gas:
-            //    refuelGasMenu();
-            //    break;
+            case eMenuOptions.Change_Vehicle_Status:
+                changeVehicleStatusMenu();
+                break;
+            case eMenuOptions.Inflate_Wheels:
+                inflateWheelsMenu();
+                break;
+            case eMenuOptions.Refuel_Gas:
+                fuelGasMenu();
+                break;
             //case eMenuOptions.Recharge_Electric:
             //    rechargeElectricMenu();
             //    break;
-            //case eMenuOptions.Display_Vehicle_Data:
-            //    DisplayVehicleDataMenu();
-            //    break;
+            case eMenuOptions.Display_Vehicle_Data:
+                DisplayVehicleDataMenu();
+                break;
             default:
                 break;
         }
@@ -192,12 +192,21 @@ public class UI
 
         foreach (var attribute in vehicleAttributes)
         {
-            Type attributeType = attribute.Item1;
-            eVehicleAttribute attributeName = attribute.Item2;                     
-            Console.WriteLine(@"Please enter {0}", attributeName);
-            string userInput = Console.ReadLine();
-            object parsedInput = parseStringToObject(attributeType, userInput);
-            vehicleData.Add(attributeName, Convert.ChangeType(parsedInput, attributeType));
+            try
+            {
+                Type attributeType = attribute.Item1;
+                eVehicleAttribute attributeName = attribute.Item2;
+                Console.WriteLine(@"Please enter {0}", attributeName);
+                string userInput = Console.ReadLine();
+                object parsedInput = parseStringToObject(attributeType, userInput);
+                vehicleData.Add(attributeName, Convert.ChangeType(parsedInput, attributeType));
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.InnerException.ToString());
+                Console.WriteLine("please try again");
+                vehicleData = inputVehicleData(i_ChosenVehicleType);
+            }
         }
 
         return vehicleData;
