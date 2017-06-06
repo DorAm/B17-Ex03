@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Ex03.GarageLogic;
-
+using System.Text;
 
 public class UI
 {
@@ -37,7 +37,7 @@ public class UI
         while (choice != eUsersChoice.Quit)
         {
             this.displayMainMenu();
-            eMenuOptions usersChoice = (eMenuOptions)inputDataFromUser(typeof(eMenuOptions));
+            eMenuOptions usersChoice = (eMenuOptions)parseStringToObject(typeof(eMenuOptions), Console.ReadLine());
             this.routeToMethod(usersChoice);
             Console.WriteLine(@"
 ================================================
@@ -52,21 +52,33 @@ public class UI
     private void displayMainMenu()
     {
         printHeading("DorOri's Garage", "Please choose:");
-        printListFromEnum(typeof(eMenuOptions));
+        StringBuilder outputToPrint = formatToTextFromEnum(typeof(eMenuOptions));
+        printFormatedOutput(outputToPrint);
+    }
+
+    private void printFormatedOutput(StringBuilder i_OutputToPrint)
+    {
+        Console.WriteLine(@" {0} 
+================================", i_OutputToPrint);
     }
 
     // == Input Validation ==
 
-    private object inputDataFromUser(Type i_InputType)
-    {
-        string userInput = Console.ReadLine();        
-        while (isInvalidValidOption(i_InputType, userInput))
-        {
-            Console.WriteLine("Invalid input, please re-enter your choice");
-            userInput = Console.ReadLine();
-        }
-        return Enum.Parse(i_InputType, userInput);
-    }
+    //private object inputDataFromUser(Type i_InputType)
+    //{
+    //    string userInput = Console.ReadLine();
+    //    if (i_InputType.IsEnum)
+    //    {
+    //        isInvalidValidOption(i_InputType, userInput);
+    //    }
+    //    else
+    //    {
+    //        while(parseStringToObject)
+    //        Console.WriteLine("Invalid input, please re-enter your choice");
+    //        userInput = Console.ReadLine();
+    //    }
+    //    return Enum.Parse(i_InputType, userInput);
+    //}
 
     private Boolean isInvalidValidOption(Type i_ValidOptions, string i_UserInput)
     {
@@ -75,11 +87,11 @@ public class UI
         try
         {
             object userInput = Enum.Parse(i_ValidOptions, i_UserInput, ignoreCase);
-            isInvalidInput = Enum.IsDefined(i_ValidOptions, i_UserInput);
         }
         catch (ArgumentException aExp)
         {
             throw new ArgumentOutOfRangeException("there is no such type", aExp.InnerException);
+            isInvalidInput = isInvalidValidOption(i_ValidOptions, i_UserInput);
         }
         catch(Exception ex)
         {
@@ -141,17 +153,18 @@ public class UI
         ", i_MainHeading, i_MessageToUser);
     }
 
-    private void printListFromEnum(Type i_EnumType)
+    private StringBuilder formatToTextFromEnum(Type i_EnumType)
     {
+        StringBuilder formatedOutput = new StringBuilder();
         Array enumTypes = Enum.GetValues(i_EnumType);
         ushort index = 0;
         foreach (var enumType in enumTypes)
         {
             index++;
-            Console.WriteLine("{0}. {1}", index, enumType.ToString());
+            formatedOutput.AppendFormat(@"{0}. {1}{2}", index, enumType.ToString(), Environment.NewLine);
         }
-        Console.WriteLine(@"
-===========================");
+
+        return formatedOutput;
     }
 
     // == Register Vehicle ==
@@ -159,8 +172,8 @@ public class UI
     private void registerVehicleMenu()
     {
         printHeading("Register a new vehicle", "Which vehicle would you like to register?");
-        printListFromEnum(typeof(eVehicleType));
-
+        StringBuilder outputToPrint = formatToTextFromEnum(typeof(eVehicleType));
+        printFormatedOutput(outputToPrint);
         eVehicleType chosenVehicleType = (eVehicleType)Enum.Parse(typeof(eVehicleType), Console.ReadLine());
         Dictionary<eVehicleAttribute, object> vehicleData = inputVehicleData(chosenVehicleType);
         bool doesExistInGarage;
@@ -224,52 +237,77 @@ public class UI
         Dictionary<string, Vehicle> vehicles = m_GarageManager.Vehicles;
 
         printHeading("Vehicle List (by status)", "Select which vehicles you want to view: ");
-        printListFromEnum(typeof(eStatus));
-        eStatus chosenFilter = (eStatus)inputDataFromUser(typeof(eStatus));
-
+        StringBuilder outputToPrint = formatToTextFromEnum(typeof(eStatus));
+        outputToPrint.Append("4. Print All");
+        printFormatedOutput(outputToPrint);
+        int userInput = (int)parseStringToObject(typeof(int), Console.ReadLine());
         // Displaying the list:
         this.printHeading("Vehicle List (by status)", "Vehicles currently in garage:");
-
+        int printAllLicenseNumber = 4;
         int index = 0;
-        foreach (var vehicle in vehicles)
+        eStatus chosenFilter;
+        if (Enum.TryParse(userInput.ToString(), out chosenFilter))
         {
-            if (vehicle.Value.Status == chosenFilter)
+            foreach (var vehicle in vehicles)
             {
-                index++;
-                Console.WriteLine(@"{0}. {1}", index, vehicle.Value.LicenceNumber);
+                if (userInput == printAllLicenseNumber || vehicle.Value.Status == chosenFilter)
+                {
+                    index++;
+                    Console.WriteLine(@"{0}. {1}", index, vehicle.Value.LicenceNumber);
+                }
+            }
+            if (index == 0)
+            {
+                Console.WriteLine("No vehicles for this filter {0}", chosenFilter);
             }
         }
-        if (index == 0)
+        else
         {
-            Console.WriteLine("No vehicles are available for filter {0}", chosenFilter);
+            Console.WriteLine("no such option");
         }
     }
 
     // == Change Vehicle Status ==
     public void changeVehicleStatusMenu()
     {
-        //printHeading("Change Vehicle Status:", "please enter vehicle's license number and the new status:");
-        //string licenseNumber = Console.ReadLine();
-        //string newStatus = Console.ReadLine();
-        //m_GarageManager.ChangeVehicleStatus(licenseNumber, newStatus);
+        printHeading("Change Vehicle Status:", "please enter vehicle's license number and the new status:");
+        string licenseNumber = Console.ReadLine();
+        eStatus newStatus = (eStatus)parseStringToObject(typeof(eStatus), Console.ReadLine());
+        m_GarageManager.ChangeVehicleStatus(licenseNumber, newStatus);
     }
 
     // == Inflate Wheels ==
     private void inflateWheelsMenu()
     {
-        printHeading("Inflate Vehicle Wheels:", "please enter vehicle's license number:");
-        string licenseNumber = Console.ReadLine();
-        m_GarageManager.InflateWheels(licenseNumber);
+        try
+        {
+            printHeading("Inflate Vehicle Wheels:", "please enter vehicle's license number:");
+            string licenseNumber = Console.ReadLine();
+            m_GarageManager.InflateWheels(licenseNumber);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine("Invalid air pressure");
+            inflateWheelsMenu();
+        }
     }
 
     // == Refuel Gas ==
-    private void refuelGasMenu()
+    private void fuelGasMenu()
     {
-        //printHeading("Refuel or Recharge Vehicle:", "please enter vehicle's license number, Gas Type, and ammount to fill");
-        //string licenseNumber = Console.ReadLine();
-        //string licenseNumber = Console.ReadLine();
-        //string licenseNumber = Console.ReadLine();
-        //m_GarageManager.FuelVehicle(licenseNumber, );
+        try
+        {
+            printHeading("Refuel or Recharge Vehicle:", "please enter vehicle's license number, Gas Type, and ammount to fill");
+            string licenseNumber = Console.ReadLine();
+            eEnergySource energySource = (eEnergySource)parseStringToObject(typeof(eEnergySource), Console.ReadLine());
+            float amountToFill = (float)parseStringToObject(typeof(float), Console.ReadLine());
+            m_GarageManager.FuelVehicle(licenseNumber, energySource, amountToFill);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine("Invalid amount");
+            fuelGasMenu();
+        }
     }
 
     // == Display Vehicle Data By License Number

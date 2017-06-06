@@ -55,7 +55,14 @@ namespace Ex03.GarageLogic
 
         public void ChangeVehicleStatus(string i_LicenseNumber, eStatus i_newStatus)
         {
-            m_Vehicles[i_LicenseNumber].Status = i_newStatus;
+            if (m_Vehicles.ContainsKey(i_LicenseNumber))
+            {
+                m_Vehicles[i_LicenseNumber].Status = i_newStatus;
+            }
+            else
+            {
+                throw new ArgumentNullException("no such vehicle in garage");
+            }
         }
 
         public void InflateWheels(string i_LicenseNumber)
