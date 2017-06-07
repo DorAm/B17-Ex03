@@ -36,7 +36,6 @@ public class UI
 
     public void RunGarage()
     {
-        //eUserAction selectedAction = eUserAction.MainMenu;
         eUserAction selectedAction;
 
         do
@@ -52,21 +51,6 @@ public class UI
             selectedAction = (eUserAction)getInput(typeof(eUserAction));
 
         } while (selectedAction != eUserAction.Quit);
-
-//        while (selectedAction != eUserAction.Quit)
-//        {
-//            {
-//                displayMainMenu();
-//                eMenuOption selectedOption = (eMenuOption)getInput(typeof(eMenuOption));
-//                routeToMethod(selectedOption);
-//                Console.WriteLine(@"
-//================================================
-//    1 - Return to main menu    |    2 - Quit          
-//================================================
-//            ");
-//                selectedAction = (eUserAction)getInput(typeof(eUserAction));
-//            }
-//        }
     }
 
     private void displayMainMenu()
@@ -167,8 +151,6 @@ public class UI
         return parsedString;
     }
 
-
-
     // ?
     private eMenuOption InputUsersChoice()
     {
@@ -240,24 +222,21 @@ public class UI
 
     private void registerVehicleMenu()
     {
-        try
+        printHeading("Register a new vehicle", "Which vehicle would you like to register?");
+        StringBuilder outputToPrint = formatTextFromEnum(typeof(eVehicleType));
+        printFormatedOutput(outputToPrint);
+
+        eVehicleType chosenVehicleType = (eVehicleType)getInput(typeof(eVehicleType));
+        Dictionary<eVehicleAttribute, object> vehicleData = inputVehicleData(chosenVehicleType);
+        bool doesExistInGarage = false;
+        m_GarageManager.RegisterVehicle(chosenVehicleType, vehicleData, out doesExistInGarage);
+        if (doesExistInGarage)
         {
-            printHeading("Register a new vehicle", "Which vehicle would you like to register?");
-            StringBuilder outputToPrint = formatTextFromEnum(typeof(eVehicleType));
-            printFormatedOutput(outputToPrint);
-            eVehicleType chosenVehicleType = (eVehicleType)Enum.Parse(typeof(eVehicleType), Console.ReadLine());
-            Dictionary<eVehicleAttribute, object> vehicleData = inputVehicleData(chosenVehicleType);
-            bool doesExistInGarage;
-            m_GarageManager.RegisterVehicle(chosenVehicleType, vehicleData, out doesExistInGarage);
-            if (doesExistInGarage == true)
-            {
-                Console.WriteLine("Vehicle with this license number is already in the garage");
-            }
+            Console.WriteLine("Vehicle with this license number is already in the garage");
         }
-        catch (Exception ex)
+        else
         {
-            Console.WriteLine(ex.Message);
-            //displayMainMenu();
+            Console.WriteLine("Vehicle registered succesfuly");
         }
     }
 
@@ -269,27 +248,18 @@ public class UI
 
         foreach (var attribute in vehicleAttributes)
         {
-            try
-            {
-                Type attributeType = attribute.Item1;
-                eVehicleAttribute attributeName = attribute.Item2;
-                Console.WriteLine(@"Please enter {0}", attributeName);
-                string userInput = Console.ReadLine();
-                object parsedInput = parseStringToObject(attributeType, userInput);
-                vehicleData.Add(attributeName, Convert.ChangeType(parsedInput, attributeType));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.InnerException.ToString());
-                Console.WriteLine("please try again");
-                vehicleData = inputVehicleData(i_ChosenVehicleType);
-            }
+            Type attributeType = attribute.Item1;
+            eVehicleAttribute attributeName = attribute.Item2;
+            Console.WriteLine(@"Please enter {0}", attributeName);
+            object parsedInput = getInput(attributeType);
+            vehicleData.Add(attributeName, parsedInput);
+            //vehicleData.Add(attributeName, Convert.ChangeType(parsedInput, attributeType));
         }
-
         return vehicleData;
     }
 
     // == Display Vehicle List By Status ==
+    // TODO: fix invalid input problems
     public void DisplayVehicleListByStatusMenu()
     {
         Dictionary<string, Vehicle> vehicles = m_GarageManager.Vehicles;
@@ -328,35 +298,35 @@ public class UI
     // == Change Vehicle Status ==
     public void changeVehicleStatusMenu()
     {
+        printHeading("Change Vehicle Status:", "please enter vehicle's license number and the new status:");
+        Console.WriteLine("License Number:");
+        string licenseNumber = (string)getInput(typeof(string));
+        Console.WriteLine("New Status:");
+        eStatus newStatus = (eStatus)getInput(typeof(eStatus));
         try
         {
-            printHeading("Change Vehicle Status:", "please enter vehicle's license number and the new status:");
-            string licenseNumber = Console.ReadLine();
-            eStatus newStatus = (eStatus)parseStringToObject(typeof(eStatus), Console.ReadLine());
             m_GarageManager.ChangeVehicleStatus(licenseNumber, newStatus);
         }
         catch (Exception ex)
         {
-            System.Console.WriteLine(ex.Message.ToString());
-            System.Console.WriteLine("please try amother input");
-            //string newUserInput = System.Console.ReadLine();
-            //parsedInput = parseStringToObject(i_AttributesType, newUserInput);
+            Console.WriteLine(ex.Message);
         }
     }
 
     // == Inflate Wheels ==
     private void inflateWheelsMenu()
     {
+        printHeading("Inflate Vehicle Wheels:", "please enter vehicle's license number:");
+        Console.WriteLine("License Number:");
+        string licenseNumber = (string)getInput(typeof(string));
+
         try
-        {
-            printHeading("Inflate Vehicle Wheels:", "please enter vehicle's license number:");
-            string licenseNumber = Console.ReadLine();
+        {                
             m_GarageManager.InflateWheels(licenseNumber);
         }
-        catch (Exception ex)
+        catch (ItemNotFoundException ex)
         {
-            Console.WriteLine("Invalid air pressure");
-            inflateWheelsMenu();
+            Console.WriteLine(ex.Message);
         }
     }
 

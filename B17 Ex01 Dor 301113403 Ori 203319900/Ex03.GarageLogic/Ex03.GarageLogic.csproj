@@ -42,12 +42,13 @@
   <ItemGroup>
     <Compile Include="Car.cs" />
     <Compile Include="EnergyTank.cs" />
+    <Compile Include="Exception\ItemNotFoundException.cs" />
     <Compile Include="GarageManager.cs" />
     <Compile Include="Motorcycle.cs" />
     <Compile Include="Owner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Truck.cs" />
-    <Compile Include="ValueOutOfRangeException.cs" />
+    <Compile Include="Exception\ValueOutOfRangeException.cs" />
     <Compile Include="Vehicle.cs" />
     <Compile Include="VehicleFactory.cs" />
     <Compile Include="Wheel.cs" />

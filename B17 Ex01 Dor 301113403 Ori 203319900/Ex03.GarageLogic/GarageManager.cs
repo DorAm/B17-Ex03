@@ -61,10 +61,11 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throw new ArgumentNullException("no such vehicle in garage");
+                throw new ItemNotFoundException(i_LicenseNumber);                
             }
         }
 
+        //TODO: add ItemNotFoundException
         public void InflateWheels(string i_LicenseNumber)
         {
             foreach (var wheel in m_Vehicles[i_LicenseNumber].Wheels)
