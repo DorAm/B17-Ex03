@@ -60,36 +60,6 @@ public class UI
         printFormatedOutput(outputToPrint);
     }
 
-    private void printFormatedOutput(StringBuilder i_OutputToPrint)
-    {
-        Console.WriteLine(@"{0} 
-================================", i_OutputToPrint);
-    }
-
-
-    // ===== Graphics =====
-
-
-
-    // == Input Validation ==
-
-    //private object inputDataFromUser(Type i_InputType)
-    //{
-    //    string userInput = Console.ReadLine();
-    //    if (i_InputType.IsEnum)
-    //    {
-    //        isInvalidValidOption(i_InputType, userInput);
-    //    }
-    //    else
-    //    {
-    //        while(parseStringToObject)
-    //        Console.WriteLine("Invalid input, please re-enter your choice");
-    //        userInput = Console.ReadLine();
-    //    }
-    //    return Enum.Parse(i_InputType, userInput);
-    //}
-
-
     // ===== Getting Input =====
 
     // A generic funciton for getting an input from the user
@@ -151,13 +121,7 @@ public class UI
         return parsedString;
     }
 
-    // ?
-    private eMenuOption InputUsersChoice()
-    {
-        // TODO: change to try parse
-        string userInput = Console.ReadLine();
-        return (eMenuOption)Enum.Parse(typeof(eMenuOption), userInput);
-    }
+    // ===== Routing =====
 
     private void routeToMethod(eMenuOption i_UsersChoice)
     {
@@ -218,7 +182,13 @@ public class UI
         return formatedOutput;
     }
 
-    // == Register Vehicle ==
+    private void printFormatedOutput(StringBuilder i_OutputToPrint)
+    {
+        Console.WriteLine(@"{0} 
+================================", i_OutputToPrint);
+    }
+
+    // ===== Register Vehicle =====
 
     private void registerVehicleMenu()
     {
@@ -349,13 +319,14 @@ public class UI
     }
 
     // == Display Vehicle Data By License Number
-    public void DisplayVehicleDataMenu()
-    {
-        //printHeading("Vehicle Data:", "please enter vehicle's license number:");
-        //string licenseNumber = Console.ReadLine();        
-        //Vehicle vehicle = m_GarageManager.getVehicle(licenseNumber);
-        //Console.WriteLine(vehicle.ToString());
-    }
+    // TODO: implement
+    //public void DisplayVehicleDataMenu()
+    //{
+    //    printHeading("Vehicle Data:", "please enter vehicle's license number:");
+    //    string licenseNumber = (string)getInput(typeof(string));
+    //    Vehicle vehicle = m_GarageManager.getVehicle(licenseNumber);
+    //    Console.WriteLine(vehicle.ToString());
+    //}
 }
 
 
