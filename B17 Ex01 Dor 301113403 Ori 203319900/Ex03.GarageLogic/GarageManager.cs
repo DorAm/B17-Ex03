@@ -67,20 +67,41 @@ namespace Ex03.GarageLogic
 
         public void InflateWheels(string i_LicenseNumber)
         {
-            foreach (var wheel in m_Vehicles[i_LicenseNumber].Wheels)
+            if (m_Vehicles.ContainsKey(i_LicenseNumber))
             {
-                wheel.Inflate(wheel.MaxAirPressure - wheel.CurrAirPressure);
+                foreach (var wheel in m_Vehicles[i_LicenseNumber].Wheels)
+                {
+                    wheel.Inflate(wheel.MaxAirPressure - wheel.CurrAirPressure);
+                }
+            }
+            else
+            {
+                throw new ItemNotFoundException(i_LicenseNumber);
             }
         }
 
         public void ChargeVehicle(string i_LicenseNumber, float i_minutesToCharge)
         {
-            m_Vehicles[i_LicenseNumber].FillEnergySource(i_minutesToCharge, eEnergySource.Electric);
+            if (m_Vehicles.ContainsKey(i_LicenseNumber))
+            {
+                m_Vehicles[i_LicenseNumber].FillEnergySource(i_minutesToCharge, eEnergySource.Electric);
+            }
+            else
+            {
+                throw new ItemNotFoundException(i_LicenseNumber);
+            }
         }
 
         public void FuelVehicle(string i_LicenseNumber, eEnergySource i_SelectedFuel, float i_Liters)
         {
-            m_Vehicles[i_LicenseNumber].FillEnergySource(i_Liters, i_SelectedFuel);
+            if (m_Vehicles.ContainsKey(i_LicenseNumber))
+            {
+                m_Vehicles[i_LicenseNumber].FillEnergySource(i_Liters, i_SelectedFuel);
+            }
+            else
+            {
+                throw new ItemNotFoundException(i_LicenseNumber);
+            }
         }
 
         public Vehicle getVehicle(string i_LicenseNumber)
