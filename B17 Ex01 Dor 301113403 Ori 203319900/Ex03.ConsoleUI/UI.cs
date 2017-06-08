@@ -207,7 +207,7 @@ i_MessageToUser);
     private void printFormatedOutput(StringBuilder i_OutputToPrint)
     {
         Console.WriteLine(
-@"{0}================================", i_OutputToPrint);
+@"{0}{1}================================", i_OutputToPrint, Environment.NewLine);
     }
 
     // ===== Register Vehicle =====
@@ -353,28 +353,38 @@ i_MessageToUser);
         {
             Vehicle vehicle = m_GarageManager.getVehicle(licenseNumber);
             StringBuilder outputString = new StringBuilder();
-            outputString.AppendFormat(@"{0}== General Data: ==", Environment.NewLine);
             outputString.AppendFormat(
-@"License Number: {0},
-Model Name: {1},
-Owner: {2},
+@"{0}== General Data: == {0}",
+            Environment.NewLine);
+            outputString.AppendFormat(
+@"License Number: {0}
+Model Name: {1}
+Owner: {2}
 Vehicle Status: {3}",
 vehicle.LicenceNumber,
 vehicle.ModelName,
-vehicle.Owner,
+vehicle.Owner.Name,
 vehicle.Status);
-            outputString.AppendFormat(@"{0}== Wheels Data: ==", Environment.NewLine);
+            outputString.AppendFormat(
+@"{0}{0}== Wheels Data: == {0}",
+            Environment.NewLine);
+            ushort index = 1;
             foreach (Wheel wheel in vehicle.Wheels)
             {
-                outputString.AppendFormat(
-@"Air presure: {0},
-Manufacaturer {1}
+                outputString.AppendFormat(                
+@"Wheel number: {0}
+Air presure: {1},
+Manufacaturer {2}
 ",
+index,
 wheel.CurrAirPressure,
 wheel.Manufacturer);
+                index++;
             }
 
-            outputString.AppendFormat(@"{0}== Energy Source Data: ==", Environment.NewLine);
+            outputString.AppendFormat(
+@"{0}== Energy Source Data: == {0}",
+            Environment.NewLine);
             outputString.AppendFormat(
 @"Status: {0},
 Source: {1}", 
