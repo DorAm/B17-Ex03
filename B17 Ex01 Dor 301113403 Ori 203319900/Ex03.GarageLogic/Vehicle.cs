@@ -31,15 +31,17 @@ namespace Ex03.GarageLogic
             Tuple.Create(typeof(string), eVehicleAttribute.OwnerName),
             Tuple.Create(typeof(string), eVehicleAttribute.OwnerPhoneNumber)
         };
-        
+
         public static List<Tuple<Type, eVehicleAttribute>> ObjectCreationList { get => s_ObjectCreationList; }
         public string ModelName { get => m_ModelName; }
         public string LicenceNumber { get => m_LicenceNumber; }
         public eStatus Status { get => m_Status; set => m_Status = value; }
         public List<Wheel> Wheels { get => m_Wheels; set => m_Wheels = value; }
 
+        public Owner Owner{ get => m_Owner; }       
+
         public Vehicle(string i_ModelName, string i_LicenseNumber, eEnergySource i_EnergySource,
-            float i_MaxEnergyCapacity, float i_CurrEnergyStatus,string i_WheelManufaturer,
+            float i_MaxEnergyCapacity, float i_CurrEnergyStatus, string i_WheelManufaturer,
             float i_MaxAirPressure, float i_CurrAirPressure, string i_OwnerName, string i_OwnerPhone)
         {
             m_ModelName = i_ModelName;

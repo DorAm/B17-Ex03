@@ -8,7 +8,6 @@ using System.Text;
 
 public class UI
 {
-
     private enum eMenuOption
     {
         Register_Vehicle = 1,
@@ -37,7 +36,6 @@ public class UI
     public void RunGarage()
     {
         eUserAction selectedAction;
-
         do
         {
             displayMainMenu();
@@ -143,34 +141,14 @@ public class UI
             case eMenuOption.Refuel_Gas:
                 fuelGasMenu();
                 break;
-            case eMenuOption.Recharge_Electric:
-                chargeElectricMenu();
-                break;
-            //case eMenuOption.Display_Vehicle_Data:
-            //    DisplayVehicleDataMenu();
+            //case eMenuOption.Recharge_Electric:
+            //    rechargeElectricMenu();
             //    break;
+            case eMenuOption.Display_Vehicle_Data:
+                //DisplayVehicleDataMenu();
+                break;
             default:
                 break;
-        }
-    }
-
-    private void chargeElectricMenu()
-    {
-        try
-        {
-            printHeading("Refuel or Recharge Vehicle:", "please enter vehicle's license number and minutes to charge");
-            string licenseNumber = Console.ReadLine();
-            float amountToFill = (float)parseStringToObject(typeof(float), Console.ReadLine());
-            m_GarageManager.ChargeVehicle(licenseNumber, amountToFill);
-        }
-        catch (ItemNotFoundException Inf)
-        {
-            Console.WriteLine(Inf.Message);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Invalid amount");
-            chargeElectricMenu();
         }
     }
 
@@ -276,7 +254,7 @@ public class UI
             }
             if (index == 0)
             {
-                Console.WriteLine("No vehicles for this filter {0}", chosenFilter);
+                Console.WriteLine("No vehicles for filter: {0}", chosenFilter);
             }
         }
         else
@@ -311,7 +289,7 @@ public class UI
         string licenseNumber = (string)getInput(typeof(string));
 
         try
-        {                
+        {
             m_GarageManager.InflateWheels(licenseNumber);
         }
         catch (ItemNotFoundException ex)
@@ -323,34 +301,65 @@ public class UI
     // == Refuel Gas ==
     private void fuelGasMenu()
     {
+        printHeading("Refuel or Recharge Vehicle:", "please enter vehicle's license number, Energy Source, and ammount to fill");
+        Console.WriteLine("License Number:");
+        string licenseNumber = (string)getInput(typeof(string));
+        Console.WriteLine("Energy Source:");
+        eEnergySource energySource = (eEnergySource)getInput(typeof(eEnergySource));
+        Console.WriteLine("Ammount to fill:");
+        float amountToFill = (float)getInput(typeof(float));
         try
         {
-            printHeading("Refuel or Recharge Vehicle:", "please enter vehicle's license number, Gas Type, and ammount to fill");
-            string licenseNumber = Console.ReadLine();
-            eEnergySource energySource = (eEnergySource)parseStringToObject(typeof(eEnergySource), Console.ReadLine());
-            float amountToFill = (float)parseStringToObject(typeof(float), Console.ReadLine());
             m_GarageManager.FuelVehicle(licenseNumber, energySource, amountToFill);
         }
-        catch (ItemNotFoundException Inf)
+        catch (ItemNotFoundException ex)
         {
-            Console.WriteLine(Inf.Message);
+            Console.WriteLine(ex.Message);
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Invalid amount");
-            fuelGasMenu();
+            Console.WriteLine(ex.Message);
         }
     }
 
     // == Display Vehicle Data By License Number
     // TODO: implement
-    //public void DisplayVehicleDataMenu()
-    //{
-    //    printHeading("Vehicle Data:", "please enter vehicle's license number:");
-    //    string licenseNumber = (string)getInput(typeof(string));
-    //    Vehicle vehicle = m_GarageManager.getVehicle(licenseNumber);
-    //    Console.WriteLine(vehicle.ToString());
-    //}
+    public void DisplayVehicleDataMenu()
+    {
+//        printHeading("Vehicle Data:", "please enter vehicle's license number:");
+//        string licenseNumber = (string)getInput(typeof(string));
+//        try
+//        {
+//            Vehicle vehicle = m_GarageManager.getVehicle(licenseNumber);
+
+//            StringBuilder outputString = new StringBuilder();
+//            outputString.AppendFormat(@"
+//License Number: {0},
+//Model Name: {1},
+//Owner: {2},
+//Status: {3}", vehicle.LicenceNumber, vehicle.ModelName, vehicle.Owner, vehicle.Status);
+
+//            outputString.AppendFormat(@"Wheels Data:");
+//            foreach (Wheel wheel in vehicle.Wheels)
+//            {
+//                outputString.AppendFormat(@"
+//Air presure: {0},
+//Manufacaturer
+//")
+//            }
+//            Wheels data:
+//-Air presuer: { 4}
+//            -Manufacaturer: { 5}
+//            Energy Source:
+//-Status: { 6}
+//            -Type: { 7}
+//            ", );
+//        }
+//        catch (ItemNotFoundException ex)
+//        {
+//            Console.WriteLine(ex.Message);
+//        }
+    }
 }
 
 

@@ -65,7 +65,6 @@ namespace Ex03.GarageLogic
             }
         }
 
-        //TODO: add ItemNotFoundException
         public void InflateWheels(string i_LicenseNumber)
         {
             if (m_Vehicles.ContainsKey(i_LicenseNumber))
@@ -103,6 +102,11 @@ namespace Ex03.GarageLogic
             {
                 throw new ItemNotFoundException(i_LicenseNumber);
             }
+        }
+
+        public Vehicle getVehicle(string i_LicenseNumber)
+        {
+            return m_Vehicles[i_LicenseNumber];
         }
     }
 }
