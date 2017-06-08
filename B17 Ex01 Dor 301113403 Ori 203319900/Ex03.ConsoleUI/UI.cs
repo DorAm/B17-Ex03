@@ -141,14 +141,35 @@ public class UI
             case eMenuOption.Refuel_Gas:
                 fuelGasMenu();
                 break;
-            //case eMenuOption.Recharge_Electric:
-            //    rechargeElectricMenu();
-            //    break;
+            case eMenuOption.Recharge_Electric:
+                chargeElectricMenu();
+                break;
             case eMenuOption.Display_Vehicle_Data:
                 DisplayVehicleDataMenu();
                 break;
             default:
                 break;
+        }
+    }
+
+    private void chargeElectricMenu()
+    {
+        printHeading("Refuel or Recharge Vehicle:", "please enter vehicle's license number and minutes to fill");
+        Console.WriteLine("License Number:");
+        string licenseNumber = (string)getInput(typeof(string));
+        Console.WriteLine("Minutes to fill:");
+        float amountToFill = (float)getInput(typeof(float));
+        try
+        {
+            m_GarageManager.ChargeVehicle(licenseNumber, amountToFill);
+        }
+        catch (ItemNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
 
