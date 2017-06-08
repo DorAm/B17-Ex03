@@ -145,7 +145,7 @@ public class UI
             //    rechargeElectricMenu();
             //    break;
             case eMenuOption.Display_Vehicle_Data:
-                //DisplayVehicleDataMenu();
+                DisplayVehicleDataMenu();
                 break;
             default:
                 break;
@@ -323,42 +323,42 @@ public class UI
     }
 
     // == Display Vehicle Data By License Number
-    // TODO: implement
     public void DisplayVehicleDataMenu()
     {
-//        printHeading("Vehicle Data:", "please enter vehicle's license number:");
-//        string licenseNumber = (string)getInput(typeof(string));
-//        try
-//        {
-//            Vehicle vehicle = m_GarageManager.getVehicle(licenseNumber);
+        printHeading("Vehicle Data:", "please enter vehicle's license number:");
+        string licenseNumber = (string)getInput(typeof(string));
+        try
+        {
+            Vehicle vehicle = m_GarageManager.getVehicle(licenseNumber);
+            StringBuilder outputString = new StringBuilder();
 
-//            StringBuilder outputString = new StringBuilder();
-//            outputString.AppendFormat(@"
-//License Number: {0},
-//Model Name: {1},
-//Owner: {2},
-//Status: {3}", vehicle.LicenceNumber, vehicle.ModelName, vehicle.Owner, vehicle.Status);
+            outputString.AppendFormat(@"{0}== General Data: ==", Environment.NewLine);
+            outputString.AppendFormat(@"
+License Number: {0},
+Model Name: {1},
+Owner: {2},
+Vehicle Status: {3}
+", vehicle.LicenceNumber, vehicle.ModelName, vehicle.Owner, vehicle.Status);
 
-//            outputString.AppendFormat(@"Wheels Data:");
-//            foreach (Wheel wheel in vehicle.Wheels)
-//            {
-//                outputString.AppendFormat(@"
-//Air presure: {0},
-//Manufacaturer
-//")
-//            }
-//            Wheels data:
-//-Air presuer: { 4}
-//            -Manufacaturer: { 5}
-//            Energy Source:
-//-Status: { 6}
-//            -Type: { 7}
-//            ", );
-//        }
-//        catch (ItemNotFoundException ex)
-//        {
-//            Console.WriteLine(ex.Message);
-//        }
+            outputString.AppendFormat(@"{0}== Wheels Data: ==", Environment.NewLine);
+            foreach (Wheel wheel in vehicle.Wheels)
+            {
+                outputString.AppendFormat(@"
+Air presure: {0},
+Manufacaturer {1}
+", wheel.CurrAirPressure, wheel.Manufacturer);
+            }
+            outputString.AppendFormat(@"{0}== Energy Source Data: ==", Environment.NewLine);
+            outputString.AppendFormat(@"
+Status: {0},
+Source: {1}", vehicle.getEnergyStatus(), vehicle.getEnergyType());
+
+            Console.WriteLine(outputString);
+        }
+        catch (ItemNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 }
 
