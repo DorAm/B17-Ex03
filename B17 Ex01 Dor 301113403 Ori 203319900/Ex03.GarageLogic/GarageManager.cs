@@ -65,7 +65,6 @@ namespace Ex03.GarageLogic
             }
         }
 
-        //TODO: add ItemNotFoundException
         public void InflateWheels(string i_LicenseNumber)
         {
             foreach (var wheel in m_Vehicles[i_LicenseNumber].Wheels)
@@ -82,6 +81,11 @@ namespace Ex03.GarageLogic
         public void FuelVehicle(string i_LicenseNumber, eEnergySource i_SelectedFuel, float i_Liters)
         {
             m_Vehicles[i_LicenseNumber].FillEnergySource(i_Liters, i_SelectedFuel);
+        }
+
+        public Vehicle getVehicle(string i_LicenseNumber)
+        {
+            return m_Vehicles[i_LicenseNumber];
         }
     }
 }

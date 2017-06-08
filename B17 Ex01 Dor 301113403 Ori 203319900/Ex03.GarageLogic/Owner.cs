@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class Owner
+    public class Owner
     {
         private string m_Name;
         private string m_Phone;
