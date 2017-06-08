@@ -146,17 +146,32 @@ public class UI
             case eMenuOption.Recharge_Electric:
                 chargeElectricMenu();
                 break;
-            case eMenuOption.Display_Vehicle_Data:
-                DisplayVehicleDataMenu();
-                break;
+            //case eMenuOption.Display_Vehicle_Data:
+            //    DisplayVehicleDataMenu();
+            //    break;
             default:
                 break;
         }
     }
 
-    private void chargeElectricMenu(string i_LicenseNumber, float i_NumOfMinutes)
+    private void chargeElectricMenu()
     {
-        m_GarageManager.ChargeVehicle(i_LicenseNumber, i_NumOfMinutes);
+        try
+        {
+            printHeading("Refuel or Recharge Vehicle:", "please enter vehicle's license number and minutes to charge");
+            string licenseNumber = Console.ReadLine();
+            float amountToFill = (float)parseStringToObject(typeof(float), Console.ReadLine());
+            m_GarageManager.ChargeVehicle(licenseNumber, amountToFill);
+        }
+        catch (ItemNotFoundException Inf)
+        {
+            Console.WriteLine(Inf.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Invalid amount");
+            chargeElectricMenu();
+        }
     }
 
     // ===== Printing =====
@@ -315,6 +330,10 @@ public class UI
             eEnergySource energySource = (eEnergySource)parseStringToObject(typeof(eEnergySource), Console.ReadLine());
             float amountToFill = (float)parseStringToObject(typeof(float), Console.ReadLine());
             m_GarageManager.FuelVehicle(licenseNumber, energySource, amountToFill);
+        }
+        catch (ItemNotFoundException Inf)
+        {
+            Console.WriteLine(Inf.Message);
         }
         catch (Exception ex)
         {
