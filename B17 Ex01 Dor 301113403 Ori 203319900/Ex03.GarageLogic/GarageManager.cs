@@ -106,7 +106,16 @@ namespace Ex03.GarageLogic
 
         public Vehicle getVehicle(string i_LicenseNumber)
         {
-            return m_Vehicles[i_LicenseNumber];
+            Vehicle vehicle = null;
+            if (m_Vehicles.ContainsKey(i_LicenseNumber))
+            {
+                vehicle = m_Vehicles[i_LicenseNumber];
+            }
+            else
+            {
+                throw new ItemNotFoundException(i_LicenseNumber);
+            }
+            return vehicle;
         }
     }
 }
