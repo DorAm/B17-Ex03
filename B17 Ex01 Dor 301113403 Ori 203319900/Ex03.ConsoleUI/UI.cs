@@ -143,15 +143,20 @@ public class UI
             case eMenuOption.Refuel_Gas:
                 fuelGasMenu();
                 break;
-            //case eMenuOption.Recharge_Electric:
-            //    rechargeElectricMenu();
-            //    break;
+            case eMenuOption.Recharge_Electric:
+                chargeElectricMenu();
+                break;
             case eMenuOption.Display_Vehicle_Data:
                 DisplayVehicleDataMenu();
                 break;
             default:
                 break;
         }
+    }
+
+    private void chargeElectricMenu(string i_LicenseNumber, float i_NumOfMinutes)
+    {
+        m_GarageManager.ChargeVehicle(i_LicenseNumber, i_NumOfMinutes);
     }
 
     // ===== Printing =====
