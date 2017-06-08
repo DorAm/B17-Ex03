@@ -13,13 +13,14 @@ namespace Ex03.GarageLogic
 
     public class EnergyTank
     {
-
-        private eEnergySource m_EnergySource;
-        private float m_MaxEnergyCapacity;
+        private readonly eEnergySource m_EnergySource;
+        private readonly float m_MaxEnergyCapacity;
         private float m_CurrEnergyStatus;
 
         public eEnergySource EnergySource { get => m_EnergySource; }
+
         public float MaxEnergyCapacity { get => m_MaxEnergyCapacity; }
+
         public float CurrEnergyStatus { get => m_CurrEnergyStatus; set => m_CurrEnergyStatus = value; }
 
         public void FillEnergySource(float i_EnergyAmountToAdd, eEnergySource i_EnergySource)
@@ -33,6 +34,7 @@ namespace Ex03.GarageLogic
                 throw new InvalidOperationException("you can not charge/fuel a vehicle more than its max capacity");
             }
         }
+
         public EnergyTank(eEnergySource i_EnergySource, float i_MaxEnergyCapacity, float i_CurrEnergyStatus)
         {
             if(i_MaxEnergyCapacity >= i_CurrEnergyStatus)
@@ -45,7 +47,6 @@ namespace Ex03.GarageLogic
             {
                 throw new ValueOutOfRangeException(0, i_MaxEnergyCapacity);
             }
-
         }
     }
 }

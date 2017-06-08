@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace Ex03.GarageLogic
 {
     public class GarageManager
     {
-        private Dictionary<string, Vehicle> m_Vehicles = null;
+        private readonly Dictionary<string, Vehicle> m_Vehicles = null;
 
         public Dictionary<string, Vehicle> Vehicles { get => m_Vehicles; }
 
@@ -15,18 +14,17 @@ namespace Ex03.GarageLogic
             m_Vehicles = new Dictionary<string, Vehicle>();
         }
 
-        public void RegisterVehicle(eVehicleType i_VehicleType ,Dictionary<eVehicleAttribute, object> i_VehicleData, out bool o_IsExist)
+        public void RegisterVehicle(eVehicleType i_VehicleType, Dictionary<eVehicleAttribute, object> i_VehicleData, out bool o_IsExist)
         {
-
-                string licenseNumber = (string)i_VehicleData[eVehicleAttribute.LicenseNumber];
-                if (o_IsExist = Vehicles.ContainsKey(licenseNumber))
-                {
-                    Vehicles[licenseNumber].Status = eStatus.InRepair;
-                }
-                else
-                {
-                    Vehicles.Add(licenseNumber, VehicleFactory.BuildNewVehicle(i_VehicleType, i_VehicleData));
-                }
+            string licenseNumber = (string)i_VehicleData[eVehicleAttribute.LicenseNumber];
+            if (o_IsExist = Vehicles.ContainsKey(licenseNumber))
+            {
+                Vehicles[licenseNumber].Status = eStatus.InRepair;
+            }
+            else
+            {
+                Vehicles.Add(licenseNumber, VehicleFactory.BuildNewVehicle(i_VehicleType, i_VehicleData));
+            }
         }
 
         public List<Tuple<Type, eVehicleAttribute>> GetVehicleAttributes(eVehicleType i_VehicleType)
@@ -53,15 +51,15 @@ namespace Ex03.GarageLogic
             return vehicleAttributes;
         }
 
-        public void ChangeVehicleStatus(string i_LicenseNumber, eStatus i_newStatus)
+        public void ChangeVehicleStatus(string i_LicenseNumber, eStatus i_NewStatus)
         {
             if (m_Vehicles.ContainsKey(i_LicenseNumber))
             {
-                m_Vehicles[i_LicenseNumber].Status = i_newStatus;
+                m_Vehicles[i_LicenseNumber].Status = i_NewStatus;
             }
             else
             {
-                throw new ItemNotFoundException(i_LicenseNumber);                
+                throw new ItemNotFoundException(i_LicenseNumber);
             }
         }
 
@@ -80,11 +78,11 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void ChargeVehicle(string i_LicenseNumber, float i_minutesToCharge)
+        public void ChargeVehicle(string i_LicenseNumber, float i_MinutesToCharge)
         {
             if (m_Vehicles.ContainsKey(i_LicenseNumber))
             {
-                m_Vehicles[i_LicenseNumber].FillEnergySource(i_minutesToCharge, eEnergySource.Electric);
+                m_Vehicles[i_LicenseNumber].FillEnergySource(i_MinutesToCharge, eEnergySource.Electric);
             }
             else
             {
@@ -115,6 +113,7 @@ namespace Ex03.GarageLogic
             {
                 throw new ItemNotFoundException(i_LicenseNumber);
             }
+
             return vehicle;
         }
     }

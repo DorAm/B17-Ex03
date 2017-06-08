@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
@@ -33,12 +29,10 @@ namespace Ex03.GarageLogic
         MaxLoad
     }
 
-
     public static class VehicleFactory
     {
-        public static Vehicle BuildNewVehicle(eVehicleType i_Type, Dictionary<eVehicleAttribute,object> i_VehicleAttributs)
+        public static Vehicle BuildNewVehicle(eVehicleType i_Type, Dictionary<eVehicleAttribute, object> i_VehicleAttributs)
         {
-
             Vehicle newVehicle;
 
             switch (i_Type)
@@ -57,9 +51,7 @@ namespace Ex03.GarageLogic
                     break;
             }
 
-            
             return newVehicle;
         }
-
     }
 }

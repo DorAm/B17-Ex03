@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Threading;
-using Ex03.GarageLogic;
 using System.Text;
+using Ex03.GarageLogic;
 
 public class UI
 {
@@ -25,7 +24,7 @@ public class UI
         Quit = 2
     }
 
-    private GarageManager m_GarageManager;
+    private readonly GarageManager m_GarageManager;
 
     public UI()
     {
@@ -47,8 +46,8 @@ public class UI
 ================================================
             ");
             selectedAction = (eUserAction)getInput(typeof(eUserAction));
-
-        } while (selectedAction != eUserAction.Quit);
+        }
+        while (selectedAction != eUserAction.Quit);
     }
 
     private void displayMainMenu()
@@ -66,12 +65,14 @@ public class UI
     {
         string userInput = Console.ReadLine();
         object parsedInput = parseStringToObject(i_Type, userInput);
+
         while (parsedInput == null)
         {
             Console.WriteLine(@"Please re-enter your choice:");
             userInput = Console.ReadLine();
             parsedInput = parseStringToObject(i_Type, userInput);
         }
+
         return parsedInput;
     }
 
@@ -79,6 +80,7 @@ public class UI
     private object parseStringToObject(Type i_Type, string i_String)
     {
         object parsedString = null;
+
         try
         {
             if (i_Type.IsEnum)
@@ -116,11 +118,11 @@ public class UI
         {
             Console.WriteLine(ex.Message);
         }
+
         return parsedString;
     }
 
     // ===== Routing =====
-
     private void routeToMethod(eMenuOption i_UsersChoice)
     {
         Console.Clear();
@@ -174,17 +176,17 @@ public class UI
     }
 
     // ===== Printing =====
-
     private void printHeading(string i_MainHeading, string i_MessageToUser)
     {
         Console.Clear();
-        Console.WriteLine(@"     
-==================================
+        Console.WriteLine(
+@"==================================
 {0}
 ==================================
 
-{1}
-        ", i_MainHeading, i_MessageToUser);
+{1}",
+i_MainHeading,
+i_MessageToUser);
     }
 
     private StringBuilder formatTextFromEnum(Type i_EnumType)
@@ -192,6 +194,7 @@ public class UI
         StringBuilder formatedOutput = new StringBuilder();
         Array enumTypes = Enum.GetValues(i_EnumType);
         ushort index = 0;
+
         foreach (var enumType in enumTypes)
         {
             index++;
@@ -203,18 +206,16 @@ public class UI
 
     private void printFormatedOutput(StringBuilder i_OutputToPrint)
     {
-        Console.WriteLine(@"{0} 
-================================", i_OutputToPrint);
+        Console.WriteLine(
+@"{0}================================", i_OutputToPrint);
     }
 
     // ===== Register Vehicle =====
-
     private void registerVehicleMenu()
     {
         printHeading("Register a new vehicle", "Which vehicle would you like to register?");
         StringBuilder outputToPrint = formatTextFromEnum(typeof(eVehicleType));
         printFormatedOutput(outputToPrint);
-
         eVehicleType chosenVehicleType = (eVehicleType)getInput(typeof(eVehicleType));
         Dictionary<eVehicleAttribute, object> vehicleData = inputVehicleData(chosenVehicleType);
         bool doesExistInGarage = false;
@@ -242,22 +243,22 @@ public class UI
             Console.WriteLine(@"Please enter {0}", attributeName);
             object parsedInput = getInput(attributeType);
             vehicleData.Add(attributeName, parsedInput);
-            //vehicleData.Add(attributeName, Convert.ChangeType(parsedInput, attributeType));
         }
+
         return vehicleData;
     }
 
     // == Display Vehicle List By Status ==
     // TODO: fix invalid input problems
-    public void DisplayVehicleListByStatusMenu()
+    private void DisplayVehicleListByStatusMenu()
     {
         Dictionary<string, Vehicle> vehicles = m_GarageManager.Vehicles;
-
         printHeading("Vehicle List (by status)", "Select which vehicles you want to view: ");
         StringBuilder outputToPrint = formatTextFromEnum(typeof(eStatus));
         outputToPrint.Append("4. Print All");
         printFormatedOutput(outputToPrint);
         int userInput = (int)parseStringToObject(typeof(int), Console.ReadLine());
+
         // Displaying the list:
         this.printHeading("Vehicle List (by status)", "Vehicles currently in garage:");
         int printAllLicenseNumber = 4;
@@ -273,6 +274,7 @@ public class UI
                     Console.WriteLine(@"{0}. {1}", index, vehicle.Value.LicenceNumber);
                 }
             }
+
             if (index == 0)
             {
                 Console.WriteLine("No vehicles for filter: {0}", chosenFilter);
@@ -285,7 +287,7 @@ public class UI
     }
 
     // == Change Vehicle Status ==
-    public void changeVehicleStatusMenu()
+    private void changeVehicleStatusMenu()
     {
         printHeading("Change Vehicle Status:", "please enter vehicle's license number and the new status:");
         Console.WriteLine("License Number:");
@@ -308,7 +310,6 @@ public class UI
         printHeading("Inflate Vehicle Wheels:", "please enter vehicle's license number:");
         Console.WriteLine("License Number:");
         string licenseNumber = (string)getInput(typeof(string));
-
         try
         {
             m_GarageManager.InflateWheels(licenseNumber);
@@ -344,7 +345,7 @@ public class UI
     }
 
     // == Display Vehicle Data By License Number
-    public void DisplayVehicleDataMenu()
+    private void DisplayVehicleDataMenu()
     {
         printHeading("Vehicle Data:", "please enter vehicle's license number:");
         string licenseNumber = (string)getInput(typeof(string));
@@ -352,27 +353,33 @@ public class UI
         {
             Vehicle vehicle = m_GarageManager.getVehicle(licenseNumber);
             StringBuilder outputString = new StringBuilder();
-
             outputString.AppendFormat(@"{0}== General Data: ==", Environment.NewLine);
-            outputString.AppendFormat(@"
-License Number: {0},
+            outputString.AppendFormat(
+@"License Number: {0},
 Model Name: {1},
 Owner: {2},
-Vehicle Status: {3}
-", vehicle.LicenceNumber, vehicle.ModelName, vehicle.Owner, vehicle.Status);
-
+Vehicle Status: {3}",
+vehicle.LicenceNumber,
+vehicle.ModelName,
+vehicle.Owner,
+vehicle.Status);
             outputString.AppendFormat(@"{0}== Wheels Data: ==", Environment.NewLine);
             foreach (Wheel wheel in vehicle.Wheels)
             {
-                outputString.AppendFormat(@"
-Air presure: {0},
+                outputString.AppendFormat(
+@"Air presure: {0},
 Manufacaturer {1}
-", wheel.CurrAirPressure, wheel.Manufacturer);
+",
+wheel.CurrAirPressure,
+wheel.Manufacturer);
             }
+
             outputString.AppendFormat(@"{0}== Energy Source Data: ==", Environment.NewLine);
-            outputString.AppendFormat(@"
-Status: {0},
-Source: {1}", vehicle.getEnergyStatus(), vehicle.getEnergyType());
+            outputString.AppendFormat(
+@"Status: {0},
+Source: {1}", 
+vehicle.getEnergyStatus(),
+vehicle.getEnergyType());
 
             Console.WriteLine(outputString);
         }
@@ -382,5 +389,3 @@ Source: {1}", vehicle.getEnergyStatus(), vehicle.getEnergyType());
         }
     }
 }
-
-

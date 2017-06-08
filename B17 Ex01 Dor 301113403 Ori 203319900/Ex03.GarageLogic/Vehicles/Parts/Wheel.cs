@@ -4,8 +4,8 @@ namespace Ex03.GarageLogic
 {
     public class Wheel
     {
-        private string m_Manufacturer;
-        private float m_MaxAirPressure;
+        private readonly string m_Manufacturer;
+        private readonly float m_MaxAirPressure;
         private float m_CurrAirPressure;
 
         public Wheel(string i_Manufacturer, float i_MaxAirPressure, float i_CurrAirPressure)
@@ -16,7 +16,9 @@ namespace Ex03.GarageLogic
         }
 
         public string Manufacturer { get => m_Manufacturer; }
+
         public float MaxAirPressure { get => m_MaxAirPressure; }
+
         public float CurrAirPressure { get => m_CurrAirPressure; }
 
         public void Inflate(float i_AddedAirVolume)

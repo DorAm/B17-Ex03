@@ -12,12 +12,6 @@ namespace Ex03.GarageLogic
 
     public abstract class Vehicle
     {
-        private string m_ModelName;
-        private string m_LicenceNumber;
-        private EnergyTank m_EnergyTank;
-        private List<Wheel> m_Wheels;
-        private Owner m_Owner;
-        private eStatus m_Status;
         private static readonly List<Tuple<Type, eVehicleAttribute>> s_ObjectCreationList = new List<Tuple<Type, eVehicleAttribute>>
         {
             Tuple.Create(typeof(string), eVehicleAttribute.ModelName),
@@ -32,17 +26,26 @@ namespace Ex03.GarageLogic
             Tuple.Create(typeof(string), eVehicleAttribute.OwnerPhoneNumber)
         };
 
+        private readonly string m_ModelName;
+        private readonly string m_LicenceNumber;
+        private readonly EnergyTank m_EnergyTank;
+        private List<Wheel> m_Wheels;
+        private readonly Owner m_Owner;
+        private eStatus m_Status;
+
         public static List<Tuple<Type, eVehicleAttribute>> ObjectCreationList { get => s_ObjectCreationList; }
+
         public string ModelName { get => m_ModelName; }
+
         public string LicenceNumber { get => m_LicenceNumber; }
+
         public eStatus Status { get => m_Status; set => m_Status = value; }
+
         public List<Wheel> Wheels { get => m_Wheels; set => m_Wheels = value; }
 
-        public Owner Owner{ get => m_Owner; }       
+        public Owner Owner { get => m_Owner; }
 
-        public Vehicle(string i_ModelName, string i_LicenseNumber, eEnergySource i_EnergySource,
-            float i_MaxEnergyCapacity, float i_CurrEnergyStatus, string i_WheelManufaturer,
-            float i_MaxAirPressure, float i_CurrAirPressure, string i_OwnerName, string i_OwnerPhone)
+        public Vehicle(string i_ModelName, string i_LicenseNumber, eEnergySource i_EnergySource, float i_MaxEnergyCapacity, float i_CurrEnergyStatus, string i_OwnerName, string i_OwnerPhone)
         {
             m_ModelName = i_ModelName;
             m_LicenceNumber = i_LicenseNumber;
@@ -52,19 +55,13 @@ namespace Ex03.GarageLogic
             m_Status = eStatus.InRepair;
         }
 
-        public Vehicle()
-        {
-        }
-
         public void InflateWheelsToMax()
         {
-
             foreach (Wheel item in Wheels)
             {
                 float airToAdd = item.MaxAirPressure - item.CurrAirPressure;
                 item.Inflate(airToAdd);
             }
-
         }
 
         public void FillEnergySource(float i_EnergyAmount, eEnergySource i_EnergySource)
@@ -91,7 +88,6 @@ namespace Ex03.GarageLogic
 
         public float getEnergyStatus()
         {
-
             return m_EnergyTank.CurrEnergyStatus;
         }
     }
